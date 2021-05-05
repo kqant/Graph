@@ -1,27 +1,24 @@
-from PyQt5.QtWidgets import QApplication
 
 import sys
 
-from bin.gui import Gag
-from bin.graphCtrl import GraphCtrl
-from bin.graphModel import GraphModel
+from PyQt5.QtWidgets import QApplication
 
-from bin.input import *
-from bin.render import *
-from bin.algorithms import *
-
+from View import GraphUI
+from Model import GraphModel
+from Control import GraphCtrl
 
 
 def main():
 	app = QApplication(sys.argv)
-	
-	view = Gag()
-	
-	model = GraphModel()
-	GraphCtrl(model, view)
 
+	view = GraphUI()
 	view.show()
+
+	model = GraphModel()
+
+	GraphCtrl(model, view)
 	sys.exit(app.exec())
 
 if __name__ == "__main__":
 	main()
+
