@@ -12,7 +12,7 @@ from matplotlib.figure import Figure
 iconPath = path.join(getcwd(), "icon\icon.ico")
 
 
-class GraphUI(QMainWindow):
+class GraphUI(QDialog):
     def __init__(self, parent=None):
         super(GraphUI, self).__init__(parent)
 
