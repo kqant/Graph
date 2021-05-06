@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import *
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 
 
 iconPath = path.join(getcwd(), "icon\icon.ico")
@@ -19,7 +19,7 @@ class GraphUI(QDialog):
         self.setWindowTitle("Graph Application")
         self.setWindowIcon(QIcon(iconPath))
 
-        self.figure = Figure()
+        self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self)
 

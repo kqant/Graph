@@ -13,7 +13,8 @@ graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
 def drawGraph(view, graph=graph_test):
-    
+    view.figure.clf()
+
     G = nx.Graph()
 
     for i in graph_test:
@@ -21,13 +22,13 @@ def drawGraph(view, graph=graph_test):
             G.add_edge(i, j, weight=graph_test[i][j])
 
     pos = nx.fruchterman_reingold_layout(G)
-    plt.figure()
+
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                  edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=3, edge_color='#750000')
 
-    plt.show()
+    view.canvas.draw()
 
 
 
