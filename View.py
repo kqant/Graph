@@ -12,7 +12,7 @@ from matplotlib.figure import Figure
 iconPath = path.join(getcwd(), "icon\icon.ico")
 
 
-class GraphUI(QDialog):
+class GraphUI(QMainWindow):
     def __init__(self, parent=None):
         super(GraphUI, self).__init__(parent)
 
@@ -49,4 +49,3 @@ class GraphUI(QDialog):
     def getPathFile(self):
         pathFile = path.join(getcwd(), "input.txt")
         return pathFile
-
