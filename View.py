@@ -47,5 +47,4 @@ class GraphUI(QDialog):
         self.generalLayout.addLayout(buttonsLayout)
 
     def getPathFile(self):
-        pathFile = path.join(getcwd(), "input.txt")
-        return pathFile
+        return QFileDialog.getOpenFileName()[0]

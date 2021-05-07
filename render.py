@@ -25,7 +25,7 @@ def drawGraph(view, graph=graph_test):
 
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
-                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
+                                edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=3, edge_color='#750000')
 
     view.canvas.draw()

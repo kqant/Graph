@@ -7,12 +7,14 @@ class Graph:
     _directed: bool
     _weighted: bool
     _filePath: str
+    _inputType: str
 
 
     def __init__(self, directed=False, weighted=False):
         self._adj = {}
         self._directed = directed
         self._weighted = weighted
+        self._inputType = "adj list"
         self._filePath = "input.txt"
 
     def print(self):
@@ -53,10 +55,11 @@ class Graph:
     def getGraphX(self):
         pass
 
-    def readGraph(self, type="adj list"):
+    def readGraph(self, type):
         try:
             with open(self._filePath, "r") as fin:
                 # Read graph as adjacency list
+                print(f"File on path {self._filePath} is opened.")
                 if type == "adj list":
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
@@ -76,6 +79,7 @@ class Graph:
 
     def initGraphFile(self, filepath):
         self._filePath = filepath
+        self.readGraph(self._inputType)
 
 
 
