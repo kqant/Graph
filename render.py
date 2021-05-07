@@ -21,7 +21,7 @@ def drawGraph(view, graph=graph_test):
         for j in graph_test[i]:
             G.add_edge(i, j, weight=graph_test[i][j])
 
-    pos = nx.fruchterman_reingold_layout(G)
+    pos = nx.planar_layout(G)
 
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
