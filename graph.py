@@ -1,5 +1,5 @@
-
 import numpy as np
+import os
 
 
 class Graph:
@@ -15,7 +15,7 @@ class Graph:
         self._directed = directed
         self._weighted = weighted
         self._inputType = "adj list"
-        self._filePath = "input.txt"
+        self._filePath = os.path.join(os.getcwd(), "input.txt")
 
     def print(self):
         for key, value in self._adj.items():
@@ -53,11 +53,14 @@ class Graph:
         return G
 
     def getGraphX(self):
-        pass
+        self.readGraph(self._inputType)
+        return self._adj
 
     def readGraph(self, type):
         try:
             with open(self._filePath, "r") as fin:
+                graph = self._adj
+                self._adj = {}
                 # Read graph as adjacency list
                 print(f"File on path {self._filePath} is opened.")
                 if type == "adj list":

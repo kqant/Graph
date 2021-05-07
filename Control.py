@@ -10,7 +10,10 @@ class GraphCtrl:
 
     def _drawButton(self):
         graphX = self._model.graph.getGraphX()
-        self._model.functions["drawGraph"](self._view, graphX)
+        if len(graphX) == 0:
+            print("Graph length is 0")
+        else:
+            self._model.functions["drawGraph"](self._view, graphX)
 
     def _readButton(self):
         filepath = self._view.getPathFile() # <- дайте путь до файла с графом из View(GUI)

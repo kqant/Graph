@@ -17,6 +17,7 @@ class GraphUI(QDialog):
         super(GraphUI, self).__init__(parent)
 
         self.setWindowTitle("Graph Application")
+        self.setMinimumSize(1024, 768)
         self.setWindowIcon(QIcon(iconPath))
 
         self.figure = plt.figure()
