@@ -12,10 +12,13 @@ def initTestGraphX():
 graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
-def drawGraph(view, graph=graph_test):
+def drawGraph(view, graph=graph_test, is_dir=1):
     view.figure.clf()
 
-    G = nx.Graph()
+    if (is_dir):
+        G = nx.DiGraph()
+    else:
+        G = nx.Graph()
 
     for i in graph_test:
         for j in graph_test[i]:
