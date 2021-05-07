@@ -12,17 +12,18 @@ def initTestGraphX():
 graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
-def drawGraph(view, graph=graph_test, is_dir=1):
+def drawGraph(view, graph):
     view.figure.clf()
-
+    adj, is_dir, weighted = graph.getFields()
+    
     if (is_dir):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
 
-    for i in graph_test:
-        for j in graph_test[i]:
-            G.add_edge(i, j, weight=graph_test[i][j])
+    for i in adj:
+        for j in adj[i]:
+            G.add_edge(i, j, weight=adj[i][j])
 
     pos = nx.kamada_kawai_layout(G)
 

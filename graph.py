@@ -17,6 +17,9 @@ class Graph:
         self._inputType = "adj list"
         self._filePath = os.path.join(os.getcwd(), "input.txt")
 
+    def getFields(self):
+        return self._adj, self._directed, self._weighted
+
     def print(self):
         for key, value in self._adj.items():
             print(f"[{key}] -> ", end="")
@@ -54,12 +57,11 @@ class Graph:
 
     def getGraphX(self):
         self.readGraph(self._inputType)
-        return self._adj
 
     def readGraph(self, type):
         try:
             with open(self._filePath, "r") as fin:
-                graph = self._adj
+                # graph = self._adj
                 self._adj = {}
                 # Read graph as adjacency list
                 print(f"File on path {self._filePath} is opened.")
