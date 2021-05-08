@@ -4,6 +4,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 from View import GraphUI
+from uiTest import Ui_MainWindow
 from Model import GraphModel
 from Control import GraphCtrl
 
@@ -11,7 +12,7 @@ from Control import GraphCtrl
 def main():
 	app = QApplication(sys.argv)
 
-	view = GraphUI()
+	view = Ui_MainWindow()
 	view.show()
 
 	model = GraphModel()
