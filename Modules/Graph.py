@@ -1,5 +1,5 @@
-import numpy as np
-import os
+from os import path, getcwd
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Graph:
@@ -8,30 +8,33 @@ class Graph:
     _weighted: bool
     _filePath: str
     _inputType: str
+    _algoOutput: str
 
 
-    def __init__(self, directed=False, weighted=False):
+    def __init__(self):
         self._adj = {}
-        self._directed = directed
-        self._weighted = weighted
+        self._directed = False
+        self._weighted = False
         self._inputType = "adj list"
-        self._filePath = os.path.join(os.getcwd(), "input.txt")
+        self._filePath = path.join(getcwd(), "input.txt").replace("\\", "/")
+        self._algoOutput = None
+
 
     def getFields(self):
         return self._adj, self._directed, self._weighted
 
+
     def print(self):
         for key, value in self._adj.items():
             print(f"[{key}] -> ", end="")
-            if value == set():
-                print("{}")
-            else:
-                print(f"{value}")
+            print(f"{value}")
+
 
     def addVertices(self, *verts):
         for v in verts:
             if v not in self._adj.keys():
                 self._adj[v] = {}
+
 
     def addEdges(self, start, ends):
         self.addVertices(*range(1, max(start, *ends)+1))
@@ -44,6 +47,7 @@ class Graph:
                 else:
                     self._adj[end] = {start: 1}
 
+
     def convert_matrix_to_list(self, matrix):
         G = {}
         for a in range(len(matrix)):
@@ -55,17 +59,13 @@ class Graph:
                         G[a + 1][b + 1] = matrix[a][b]
         return G
 
-    def getGraphX(self):
-        self.readGraph(self._inputType)
 
-    def readGraph(self, type):
+    def readGraph(self):
         try:
             with open(self._filePath, "r") as fin:
-                # graph = self._adj
                 self._adj = {}
                 # Read graph as adjacency list
-                print(f"File on path {self._filePath} is opened.")
-                if type == "adj list":
+                if self._inputType == "Adjacency List":
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
                         if temp == []:
@@ -77,10 +77,46 @@ class Graph:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
                 # Read graph as adjacency matrix
-                elif type == "adj matrix":
-                    pass
+                elif self._inputType == "Adjacency Matrix":
+                    matrix = []
+                    while True:
+                        temp = [int(i) for i in fin.readline().split()]
+                        if temp == []:
+                            break
+                        matrix.append(temp)
+                    self._adj = self.convert_matrix_to_list(matrix)
         except FileNotFoundError:
             print("Path error")
+            self.showError("Path error")
+        except IndexError:
+            print("File not match input type")
+            self.showError("File not match input type")
+
+
+    def showError(self, error):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        if error == "Path error":
+            msg.setWindowTitle("Path error")
+            msg.setText("Choose correct file.")
+        elif error == "File not match input type":
+            msg.setWindowTitle("File not match input type")
+            msg.setText("Choose file with correct graph input type.")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()
+
+
+    def minPathFind(self):
+        path = []
+        print("Min Path")
+        return path
+
+
+    def coloring(self):
+        colors = {}
+        print("Coloring match with needed input type")
+        return colors
+
 
     def initGraphFile(self, filepath):
         self._filePath = filepath
@@ -89,6 +125,7 @@ class Graph:
 
 
 if __name__ == "__main__":
+    msg = QMessageBox()
     g = Graph(directed=True)
     g.readGraph()
     g.print()

@@ -1,18 +1,10 @@
 
 import networkx as nx
-
-
-#Граф взят из примера input.png
-def initTestGraphX():
-    g = nx.Graph()
-    g.add_nodes_from( [1, 2, 3] )
-    g.add_edges_from( [ (1, 2), (2, 3), (3, 1) ] )
-    return g
-
 graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
-def drawGraph(view, graph):
+
+def drawDefault(view, graph):
     view.figure.clf()
     adj, is_dir, weighted = graph.getFields()
     
@@ -34,6 +26,23 @@ def drawGraph(view, graph):
 
     view.canvas.draw()
 
+
+def drawMinPath():
+    pass
+
+
+def drawColoring():
+    pass
+
+
+def chooseDrawType(graphctrl):
+    algo = graphctrl._view.comboBoxAlgo.currentText()
+    if algo == "Default":
+        drawDefault(graphctrl._view, graphctrl._model.graph)
+    elif algo == "Min Path Finding":
+        pass
+    elif algo == "Coloring":
+        pass
 
 
 if __name__ == "__main__":

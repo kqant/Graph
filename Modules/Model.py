@@ -1,12 +1,12 @@
 
-from graph import Graph
-from render import drawGraph
+from .Graph import Graph
+from .Render import chooseDrawType
 
 
 class GraphModel():
     def __init__(self):
         self.graph = Graph()
         self.functions = {
-            drawGraph.__name__: drawGraph
+            chooseDrawType.__name__: chooseDrawType
         }
 
