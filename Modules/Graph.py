@@ -1,7 +1,7 @@
 from os import path, getcwd
 from PyQt5.QtWidgets import QMessageBox
 from collections import deque
-
+from ast import literal_eval
 
 class Graph:
     _adj: dict
@@ -9,7 +9,7 @@ class Graph:
     _weighted: bool
     _filePath: str
     _inputType: str
-    _algoOutput: str
+    _algoValues: dict
 
 
     def __init__(self):
@@ -18,11 +18,10 @@ class Graph:
         self._weighted = False
         self._inputType = "adj list"
         self._filePath = path.join(getcwd(), "input.txt").replace("\\", "/")
-        self._algoOutput = None
-
+        self._algoValues = {}
 
     def getFields(self):
-        return self._adj, self._directed, self._weighted
+        return self._adj, self._directed, self._weighted, self._algoValues
 
 
     def print(self):
@@ -61,11 +60,36 @@ class Graph:
         return G
 
 
+    def openGraph(self, path):
+        try:
+            with open(path, "r") as file:
+                    self.setFields(literal_eval(file.readline()))
+        except Exception:
+            self.showError("File corrupted")
+
+
+    def setFields(self, values):
+        self._adj = values["_adj"]
+        self._directed = values["_directed"]
+        self._weighted = values["_weighted"]
+        self._algoValues = values["_algoValues"]
+
+
+    def saveGraph(self, path):
+        with open(path, "w") as file:
+            tempdict = {}
+            tempdict["_adj"] = self._adj
+            tempdict["_directed"] = self._directed
+            tempdict["_weighted"] = self._weighted
+            tempdict["_algoValues"] = self._algoValues
+            file.write(f"{tempdict}")
+
+
     def readGraph(self):
         try:
             with open(self._filePath, "r") as fin:
-                self._adj = {}
                 if self._inputType == "Adjacency List":
+                    self._adj = {}
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
                         if temp == []:
@@ -105,11 +129,14 @@ class Graph:
         elif error == "Minimal path error":
             msg.setWindowTitle("The path between the vertices does not exist ")
             msg.setText("Choose other vertices")
+        elif error == "File corrupted":
+            msg.setWindowTitle("File corrupted")
+            msg.setText("Fix file or choose another")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
 
 
-    def minPathFind(self,start,goal,graph):
+    def minPathFind(self, start, goal, graph):
         if start not in graph or goal not in graph:
             self.showError("Vertices not in graph")
         queue = deque()
@@ -145,4 +172,4 @@ class Graph:
 
     def initGraphFile(self, filepath):
         self._filePath = filepath
-        self.readGraph(self._inputType)
+        self.readGraph()

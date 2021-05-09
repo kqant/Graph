@@ -4,9 +4,8 @@ graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
 
-def drawDefault(view, graph):
+def drawDefault(view, adj, is_dir, weighted):
     view.figure.clf()
-    adj, is_dir, weighted = graph.getFields()
     
     if (is_dir):
         G = nx.DiGraph()
@@ -27,20 +26,22 @@ def drawDefault(view, graph):
     view.canvas.draw()
 
 
-def drawMinPath():
+def drawMinPath(view, path):
     pass
 
 
-def drawColoring():
+def drawColoring(view, colors):
     pass
 
 
 def chooseDrawType(graphctrl):
     algo = graphctrl._view.comboBoxAlgo.currentText()
+    adj, is_dir, weighted, algoValues = graphctrl._model.graph.getFields()
     if algo == "Default":
-        drawDefault(graphctrl._view, graphctrl._model.graph)
+        drawDefault(graphctrl._view, adj, is_dir, weighted)
     elif algo == "Min Path Finding":
-        pass
+        length, path = graphctrl._model.graph.minPathFind(1, 1, graphctrl._model.graph._adj)
+        drawMinPath(graphctrl._view, path)
     elif algo == "Coloring":
-        pass
+        drawColoring()
 

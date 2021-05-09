@@ -6,7 +6,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
 
-from os import path, getcwd
+from os import path, getcwd, utime
 
 iconPath = path.join(getcwd(), "icon/icon.ico")
 
@@ -25,7 +25,7 @@ class GraphUI(QMainWindow):
         self.graphwidget = QWidget(self)
         self.generalLayout = QVBoxLayout(self.graphwidget)
 
-        self._createButtons() # основные кнопки
+        self._createButtons()
         self._createInputTypeChoose()
         self._createInputTypeComboBox()
         self._createAlgoLabelChoose()
@@ -40,15 +40,14 @@ class GraphUI(QMainWindow):
         self._setObjectsNames()
         self._setText()
         self._setGeometry()
-        self.setLayout(self.generalLayout)
 
 
     def _createButtons(self):
         self.buttons = {}
         buttons = {
             "Draw": (0, 0, 260, 100),
+            "Read": (0, 1, 260, 100),
             "Choose Input File": (0, 2, 260, 100),
-            "Save Graph": (0, 4, 260, 100),
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
@@ -117,15 +116,15 @@ class GraphUI(QMainWindow):
         self.menubar = QMenuBar(self)
         self.statusbar = QStatusBar(self)
         self.menuGraph = QMenu(self.menubar)
-        self.actionNew = QAction(self)
         self.actionOpen = QAction(self)
         self.actionSave = QAction(self)
+        self.actionExit = QAction(self)
 
         self.setMenuBar(self.menubar)
         self.setStatusBar(self.statusbar)
-        self.menuGraph.addAction(self.actionNew)
         self.menuGraph.addAction(self.actionOpen)
         self.menuGraph.addAction(self.actionSave)
+        self.menuGraph.addAction(self.actionExit)
         self.menubar.addAction(self.menuGraph.menuAction())
 
 
@@ -144,7 +143,6 @@ class GraphUI(QMainWindow):
         self.menubar.setObjectName("menubar")
         self.menuGraph.setObjectName("menuGraph")
         self.statusbar.setObjectName("statusbar")
-        self.actionNew.setObjectName("actionNew")
         self.actionOpen.setObjectName("actionOpen")
         self.actionSave.setObjectName("actionSave")
         self.graphwidget.setObjectName("graphwidget")
@@ -186,16 +184,38 @@ class GraphUI(QMainWindow):
         
         self.ChooseAlgoritmnLabel.setText("Choose algorithm")
         self.ChooseInputType.setText("Choose input type")
-
+        
         self.CheckBoxDirected.setText("Directed")
         self.ChooseProperties.setText("Choose properties")
 
-        self.menuGraph.setTitle("Graph")
-        self.actionNew.setText("New")
-        self.actionOpen.setText("Open")
-        self.actionSave.setText("Save")
+        self.menuGraph.setTitle("File")
+        self.actionOpen.setText("Import")
+        self.actionSave.setText("Export")
+        self.actionExit.setText("Exit")
+
 
     def getPathFile(self):
-        return QFileDialog.getOpenFileName()[0]
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", path.join(getcwd(), "input.txt"), options=options)
+        if fileName:
+            return fileName
+
+
+    def touch(self, path):
+        with open(path, "a"):
+            utime(path, None)
+
+    
+    def createNewFile(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(self, "Graph Application", options=options)
+
+        if fileName:
+            self.touch(fileName)
+            return fileName
+
+
 
 
