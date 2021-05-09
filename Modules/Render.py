@@ -44,7 +44,3 @@ def chooseDrawType(graphctrl):
     elif algo == "Coloring":
         pass
 
-
-if __name__ == "__main__":
-    pass
-

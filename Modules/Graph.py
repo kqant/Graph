@@ -1,5 +1,6 @@
 from os import path, getcwd
 from PyQt5.QtWidgets import QMessageBox
+from collections import deque
 
 
 class Graph:
@@ -64,7 +65,6 @@ class Graph:
         try:
             with open(self._filePath, "r") as fin:
                 self._adj = {}
-                # Read graph as adjacency list
                 if self._inputType == "Adjacency List":
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
@@ -76,7 +76,6 @@ class Graph:
                         else:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
-                # Read graph as adjacency matrix
                 elif self._inputType == "Adjacency Matrix":
                     matrix = []
                     while True:
@@ -86,10 +85,8 @@ class Graph:
                         matrix.append(temp)
                     self._adj = self.convert_matrix_to_list(matrix)
         except FileNotFoundError:
-            print("Path error")
             self.showError("Path error")
         except IndexError:
-            print("File not match input type")
             self.showError("File not match input type")
 
 
@@ -102,14 +99,42 @@ class Graph:
         elif error == "File not match input type":
             msg.setWindowTitle("File not match input type")
             msg.setText("Choose file with correct graph input type.")
+        elif error == "Vertices not in graph":
+            msg.setWindowTitle("Vertices not in graph")
+            msg.setText("Select vertices in graph ")
+        elif error == "Minimal path error":
+            msg.setWindowTitle("The path between the vertices does not exist ")
+            msg.setText("Choose other vertices")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
 
 
-    def minPathFind(self):
-        path = []
-        print("Min Path")
-        return path
+    def minPathFind(self,start,goal,graph):
+        if start not in graph or goal not in graph:
+            self.showError("Vertices not in graph")
+        queue = deque()
+        visited = {start: 0}
+        tmp_path = {}
+        queue.append(start)
+        while queue:
+            v = queue.popleft()
+            for u in graph[v]:
+                if u not in visited or visited[v] + graph[v][u] < visited[u]:
+                    visited[u] = visited[v] + graph[v][u]
+                    queue.append(u)
+                    tmp_path[u] = v
+        v = goal
+        path = deque()
+        path.append(v)
+        if v in tmp_path:
+            while v != start:
+                v = tmp_path[v]
+                path.appendleft(v)
+            return visited[goal], list(path)
+        elif start == goal:
+            return 0, [start]
+        else:
+            self.showError("Minimal path error")
 
 
     def coloring(self):
@@ -121,16 +146,3 @@ class Graph:
     def initGraphFile(self, filepath):
         self._filePath = filepath
         self.readGraph(self._inputType)
-
-
-
-if __name__ == "__main__":
-    msg = QMessageBox()
-    g = Graph(directed=True)
-    g.readGraph()
-    g.print()
-    g.addVertices(3, 4, 5, 6)
-    g.addEdges(7, {2:1, 3:1, 4:1})
-    print("\n")
-    g.print()
-
