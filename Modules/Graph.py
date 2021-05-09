@@ -51,12 +51,15 @@ class Graph:
     def convert_matrix_to_list(self, matrix):
         G = {}
         for a in range(len(matrix)):
-            for b in range(len(matrix)):
-                if matrix[a][b]:
-                    if a + 1 not in G:
-                        G[a + 1] = {b + 1: matrix[a][b]}
-                    else:
-                        G[a + 1][b + 1] = matrix[a][b]
+            if matrix[a].count(0) != len(matrix):
+                for b in range(len(matrix)):
+                    if matrix[a][b]:
+                        if a + 1 not in G:
+                            G[a + 1] = {b + 1: matrix[a][b]}
+                        else:
+                            G[a + 1][b + 1] = matrix[a][b]
+            else:
+                G[a + 1] = set()
         return G
 
 
@@ -164,10 +167,40 @@ class Graph:
             self.showError("Minimal path error")
 
 
-    def coloring(self):
-        colors = {}
-        print("Coloring match with needed input type")
-        return colors
+    def coloring(self,graph):
+        colors = {0: (255, 0, 0), 1: (255, 192, 203), 2: (255, 20, 147), 3: (255, 165, 0), 4: (255, 215, 0),
+                  5: (147, 112, 219), 6: (75, 0, 130), 7: (139, 69, 19), 8: (128, 128, 128), 9: (0, 255, 0),10: (0, 128, 0),
+                  11: (0, 255, 255), 12: (0, 0, 255), 13: (119, 136, 153), 14: (47, 79, 79), 15: (255, 255, 255)}
+        tmp = {x: 0 for x in graph}
+        for x in graph:
+            if graph[x] != set():
+                tmp[x] = len(graph[x].keys())
+            else:
+                tmp[x] = 0
+        vert_list = list(tmp.items())
+        vert_list.sort(key=lambda i: i[1])
+        colored = {x: -1 for x in graph}
+        flag = True
+        cl = 0
+        sm_list = []
+        for v in vert_list:
+            v = v[0]
+            if colored[v] == -1:
+                colored[v] = cl
+                sm_list.append(v)
+                for j in vert_list:
+                    j = j[0]
+                    if colored[j] == -1:
+                        for sm in sm_list:
+                            if sm in graph[j] or j in graph[sm] and flag:
+                                flag = False
+                        if flag:
+                            colored[j] = cl
+                            sm_list.append(j)
+                        flag = True
+                sm_list = []
+                cl += 1
+        return colored
 
 
     def initGraphFile(self, filepath):
