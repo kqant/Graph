@@ -115,8 +115,10 @@ class Graph:
                     self._adj = self.convert_matrix_to_list(matrix)
         except (FileNotFoundError, TypeError):
             self.showError("Path error")
+            self._adj = {}
         except (IndexError, ValueError):
             self.showError("File not match input type")
+            self._adj = {}
 
 
     def showError(self, error):
@@ -144,6 +146,7 @@ class Graph:
     def minPathFind(self, start, goal, graph):
         if start not in graph or goal not in graph:
             self.showError("Vertices not in graph")
+            return None, None
         queue = deque()
         visited = {start: 0}
         tmp_path = {}
@@ -204,8 +207,14 @@ class Graph:
                 sm_list = []
                 cl += 1
         res = {}
+        existColors = {}
+        # colored = {1: 1, 2: 0, 3: 0}
         for i in colored:
-            res[i] = (randint(0, 255), randint(0, 255), randint(0, 255))
+            if colored[i] in existColors.keys():
+                res[i] = existColors[colored[i]]
+            else:
+                existColors[colored[i]] = (randint(0, 255), randint(0, 255),randint(0, 255))
+                res[i] = existColors[colored[i]]
         return res
 
 
