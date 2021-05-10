@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 from os import path, getcwd, utime
 
-iconPath = path.join(getcwd(), "icon/icon.ico")
+iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
 
 class GraphUI(QMainWindow):
     def __init__(self, parent = None):
