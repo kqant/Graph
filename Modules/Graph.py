@@ -1,4 +1,5 @@
 from os import path, getcwd
+from random import randint
 from PyQt5.QtWidgets import QMessageBox
 from collections import deque
 from ast import literal_eval
@@ -104,7 +105,6 @@ class Graph:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
                     self.addVertices(max(self._adj.keys()))
-                    print(self._adj)
                 elif self._inputType == "Adjacency Matrix":
                     matrix = []
                     while True:
@@ -171,9 +171,9 @@ class Graph:
 
 
     def coloring(self,graph):
-        colors = {0: (255, 0, 0), 1: (255, 255, 0), 2: (0, 128, 0), 3: (0, 0, 255), 4: (255, 165, 0),
-                    5: (75, 0, 130), 6: (238, 130, 238), 7: (0,255,251), 8: (0, 255, 0), 9: (25, 25, 112),10: (0, 128, 0),
-                    11: (0, 255, 130), 12: (128, 128, 0), 13: (119, 136, 153), 14: (47, 79, 79), 15: (255, 255, 255)}
+        # colors = {0: (255, 0, 0), 1: (255, 255, 0), 2: (0, 128, 0), 3: (0, 0, 255), 4: (255, 165, 0),
+        #             5: (75, 0, 130), 6: (238, 130, 238), 7: (0,255,251), 8: (0, 255, 0), 9: (25, 25, 112),10: (0, 128, 0),
+        #             11: (0, 255, 130), 12: (128, 128, 0), 13: (119, 136, 153), 14: (47, 79, 79), 15: (255, 255, 255)}
         tmp = {x: 0 for x in graph}
         for x in graph:
             if graph[x] != set():
@@ -205,7 +205,7 @@ class Graph:
                 cl += 1
         res = {}
         for i in colored:
-            res[i] = colors[colored[i]]
+            res[i] = (randint(0, 255), randint(0, 255), randint(0, 255))
         return res
 
 

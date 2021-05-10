@@ -200,7 +200,6 @@ class GraphUI(QMainWindow):
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", path.join(getcwd(), "input.txt"), options=options)
         if fileName:
-            print(fileName)
             return fileName
 
 
