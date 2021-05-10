@@ -103,22 +103,22 @@ def drawColoring(view, adj, is_dir, weighted, colors):
 
 
 def chooseDrawType(graphctrl):
-    algo = graphctrl._view.comboBoxAlgo.currentText()
-    adj, is_dir, weighted, algoValues = graphctrl._model.graph.getFields()
+    algo = graphctrl.view.comboBoxAlgo.currentText()
+    adj, is_dir, weighted, algoValues = graphctrl.model.graph.getFields()
     
     if algo == "Default":
-        drawDefault(graphctrl._view, adj, is_dir, weighted)
+        drawDefault(graphctrl.view, adj, is_dir, weighted)
     
     elif algo == "Min Path Finding":
-        start, end = graphctrl._view.minPathTakeInput()
+        start, end = graphctrl.view.minPathTakeInput()
         if start == -1 and end == -1:
             return
-        length, path = graphctrl._model.graph.minPathFind(start, end, graphctrl._model.graph._adj)
+        length, path = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph._adj)
         if length == None:
             return
-        drawMinPath(graphctrl._view, adj, is_dir, weighted, path)
+        drawMinPath(graphctrl.view, adj, is_dir, weighted, path)
     
     elif algo == "Coloring":
-        colors = graphctrl._model.graph.coloring(adj)
-        drawColoring(graphctrl._view, adj, is_dir, weighted, colors)
+        colors = graphctrl.model.graph.coloring(adj)
+        drawColoring(graphctrl.view, adj, is_dir, weighted, colors)
 

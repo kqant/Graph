@@ -4,60 +4,60 @@ from sys import exit
 
 class GraphCtrl:
     def __init__(self, model, view):
-        self._model = model
-        self._view = view
+        self.model = model
+        self.view = view
         self._connectButtons()
 
     def _connectButtons(self):
-        self._view.buttons["Draw"].clicked.connect(partial(self._drawGraph))
-        self._view.buttons["Choose Input File"].clicked.connect(partial(self._chooseInputFile))
-        self._view.buttons["Read"].clicked.connect(partial(self._readGraph))
-        self._view.CheckBoxDirected.stateChanged.connect(partial(self._changeDir))
-        self._view.CheckBoxWeighted.stateChanged.connect(partial(self._changeWeight))
-        self._view.actionOpen.triggered.connect(partial(self._openGraph))
-        self._view.actionSave.triggered.connect(partial(self._saveGraph))
-        self._view.actionExit.triggered.connect(partial(self._exit))
+        self.view.buttons["Draw"].clicked.connect(partial(self._drawGraph))
+        self.view.buttons["Choose Input File"].clicked.connect(partial(self._chooseInputFile))
+        self.view.buttons["Read"].clicked.connect(partial(self._readGraph))
+        self.view.CheckBoxDirected.stateChanged.connect(partial(self._changeDir))
+        self.view.CheckBoxWeighted.stateChanged.connect(partial(self._changeWeight))
+        self.view.actionOpen.triggered.connect(partial(self._openGraph))
+        self.view.actionSave.triggered.connect(partial(self._saveGraph))
+        self.view.actionExit.triggered.connect(partial(self._exit))
 
 
     def _drawGraph(self):
         self._changeInputType()
-        self._model.functions["chooseDrawType"](self)
+        self.model.functions["chooseDrawType"](self)
 
 
     def _readGraph(self):
-        self._model.graph.readGraph()
+        self.model.graph.readGraph()
 
 
     def _changeInputType(self):
-        self._model.graph._inputType = self._view.comboBoxInputType.currentText()
+        self.model.graph._inputType = self.view.comboBoxInputType.currentText()
 
 
     def _chooseInputFile(self):
-        filepath = self._view.getPathFile()
+        filepath = self.view.getPathFile()
         if filepath:
-            self._model.graph.initGraphFile(filepath)
+            self.model.graph.initGraphFile(filepath)
             self._readGraph()
 
     def _openGraph(self):
-        self._model.graph.openGraph(self._view.getPathFile())
+        self.model.graph.openGraph(self.view.getPathFile())
         self.setCheckBoxes()
 
     def setCheckBoxes(self):
-        self._view.CheckBoxDirected.setChecked(self._model.graph._directed)
-        self._view.CheckBoxWeighted.setChecked(self._model.graph._weighted)
+        self.view.CheckBoxDirected.setChecked(self.model.graph._directed)
+        self.view.CheckBoxWeighted.setChecked(self.model.graph._weighted)
 
 
     def _saveGraph(self):
-        path = self._view.createNewFile()
+        path = self.view.createNewFile()
         if path:
-            self._model.graph.saveGraph(path)
+            self.model.graph.saveGraph(path)
 
     def _changeDir(self):
-        self._model.graph._directed = self._view.CheckBoxDirected.isChecked()
+        self.model.graph._directed = self.view.CheckBoxDirected.isChecked()
 
 
     def _changeWeight(self):
-        self._model.graph._weighted = self._view.CheckBoxWeighted.isChecked()
+        self.model.graph._weighted = self.view.CheckBoxWeighted.isChecked()
 
     def _exit(self):
         exit()
