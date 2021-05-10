@@ -236,5 +236,4 @@ class GraphUI(QMainWindow):
         if not ok:
             self.guiErrorShow("Doesn't exist vertice")
             return -1, -1
-        # print(v1, v2)
         return v1, v2

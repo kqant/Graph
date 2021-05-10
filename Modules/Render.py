@@ -70,7 +70,6 @@ def drawMinPath(view, adj, is_dir, weighted, path):
 
 def drawColoring(view, adj, is_dir, weighted, colors):
     view.figure.clf()
-    print(colors)
     if (is_dir):
         G = nx.DiGraph()
     else:
