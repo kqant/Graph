@@ -53,7 +53,32 @@ def drawMinPath(view, path):
 
 
 def drawColoring(view, colors):
-    pass
+    view.figure.clf()
+    
+    if (is_dir):
+        G = nx.DiGraph()
+    else:
+        G = nx.Graph()
+        
+    def converter(colors):
+        col_converted = []
+        for i in colors:
+            colors_item = (colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255)
+            col_converted.append(colors_item)
+        return col_converted
+    
+    for i in adj:
+        for j in adj[i]:
+            G.add_edge(i, j, weight=adj[i][j], color='#750000')
+            
+    pos = nx.kamada_kawai_layout(G)
+    
+    nx.draw(G, pos=pos, with_labels=True, node_color=converter(colors), font_color='white', font_weight='bold', alpha=0.9)
+    nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
+                             edge_labels=nx.get_edge_attributes(G, 'weight'))
+    nx.draw_networkx_edges(G, pos=pos, width=2, edge_color='#750000')
+    
+    view.canvas.draw()
 
 
 def chooseDrawType(graphctrl):
