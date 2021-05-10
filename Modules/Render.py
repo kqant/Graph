@@ -12,9 +12,14 @@ def drawDefault(view, adj, is_dir, weighted):
     else:
         G = nx.Graph()
 
-    for i in adj:
-        for j in adj[i]:
-            G.add_edge(i, j, weight=adj[i][j])
+    if (weighted):
+        for i in adj:
+            for j in adj[i]:
+                G.add_edge(i, j, weight=adj[i][j])
+    else:
+        for i in adj:
+            for j in adj[i]:
+                G.add_edge(i, j)
 
     pos = nx.kamada_kawai_layout(G)
 
