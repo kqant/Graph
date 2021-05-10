@@ -175,7 +175,7 @@ class Graph:
     def coloring(self,graph):
         tmp = {x: 0 for x in graph}
         for x in graph:
-            if graph[x] != set():
+            if graph[x]:
                 tmp[x] = len(graph[x].keys())
             else:
                 tmp[x] = 0
