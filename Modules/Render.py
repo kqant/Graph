@@ -10,6 +10,9 @@ def drawDefault(view, adj, is_dir, weighted):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
+        
+    for i in adj:
+        G.add_node(i)
 
     if (weighted):
         for i in adj:
@@ -37,6 +40,9 @@ def drawMinPath(view, adj, is_dir, weighted, path):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
+        
+    for i in adj:
+        G.add_node(i)
     
     for i in adj:
         for j in adj[i]:
@@ -75,6 +81,9 @@ def drawColoring(view, adj, is_dir, weighted, colors):
         for i in colors:
             col_converted.append((colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255))
         return col_converted
+    
+    for i in adj:
+        G.add_node(i)
     
     if (weighted):
         for i in adj:
