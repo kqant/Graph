@@ -39,13 +39,13 @@ class Graph:
     def addEdges(self, start, ends):
         self.addVertices(*range(1, max(start, *ends)+1))
         self._adj[start] = {**self._adj[start], **ends}
-        
-        if not self._directed:  # if underected
+        # self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
+        if not self._directed:
             for end in ends.keys():
                 if end in self._adj.keys():
-                    self._adj[end] = {**self._adj[end], **{start: 1}}
+                    self._adj[end] = {**self._adj[end], **{start: ends[end]}}
                 else:
-                    self._adj[end] = {start: 1}
+                    self._adj[end] = {start: ends[end]}
 
 
     def convert_matrix_to_list(self, matrix):
