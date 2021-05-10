@@ -1,6 +1,5 @@
 
 import networkx as nx
-graph_test = {1:{3: 228}, 2:{4:12, 5: 512}}
 
 
 
@@ -26,7 +25,7 @@ def drawDefault(view, adj, is_dir, weighted):
     view.canvas.draw()
 
 
-def drawMinPath(view, path):
+def drawMinPath(view, adj, is_dir, weighted, path):
     view.figure.clf()
     
     if (is_dir):
@@ -46,15 +45,15 @@ def drawMinPath(view, path):
     
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
-                             edge_labels=nx.get_edge_attributes(G, 'weight'))
+                                edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=2, edge_color=nx.get_edge_attributes(G,'color').values())
     
     view.canvas.draw()
 
 
-def drawColoring(view, colors):
+def drawColoring(view, adj, is_dir, weighted, colors):
     view.figure.clf()
-    
+    print(colors)
     if (is_dir):
         G = nx.DiGraph()
     else:
@@ -63,19 +62,18 @@ def drawColoring(view, colors):
     def converter(colors):
         col_converted = []
         for i in colors:
-            colors_item = (colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255)
-            col_converted.append(colors_item)
+            col_converted.append((colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255))
         return col_converted
     
     for i in adj:
         for j in adj[i]:
             G.add_edge(i, j, weight=adj[i][j], color='#750000')
-            
+    
     pos = nx.kamada_kawai_layout(G)
     
     nx.draw(G, pos=pos, with_labels=True, node_color=converter(colors), font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
-                             edge_labels=nx.get_edge_attributes(G, 'weight'))
+                                edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=2, edge_color='#750000')
     
     view.canvas.draw()
@@ -84,11 +82,16 @@ def drawColoring(view, colors):
 def chooseDrawType(graphctrl):
     algo = graphctrl._view.comboBoxAlgo.currentText()
     adj, is_dir, weighted, algoValues = graphctrl._model.graph.getFields()
+    
     if algo == "Default":
         drawDefault(graphctrl._view, adj, is_dir, weighted)
+    
     elif algo == "Min Path Finding":
-        length, path = graphctrl._model.graph.minPathFind(1, 1, graphctrl._model.graph._adj)
-        drawMinPath(graphctrl._view, path)
+        start, end = graphctrl._view.minPathTakeInput()
+        length, path = graphctrl._model.graph.minPathFind(start, end, graphctrl._model.graph._adj)
+        drawMinPath(graphctrl._view, adj, is_dir, weighted, path)
+    
     elif algo == "Coloring":
-        drawColoring()
+        colors = graphctrl._model.graph.coloring(adj)
+        drawColoring(graphctrl._view, adj, is_dir, weighted, colors)
 

@@ -217,5 +217,24 @@ class GraphUI(QMainWindow):
             return fileName
 
 
+    def guiErrorShow(self, error):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.information)
+        if error == "Doesn't exist vertice":
+            msg.setWindowTitle("Doesn't exist vertice")
+            msg.setText("Input correct vertice")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()
 
 
+    def minPathTakeInput(self):
+        v1, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your start vertice:')
+        if not ok:
+            self.guiErrorShow("Doesn't exist vertice")
+            return
+        v2, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your end vertice:')
+        if not ok:
+            self.guiErrorShow("Doesn't exist vertice")
+            return
+        # print(v1, v2)
+        return v1, v2
