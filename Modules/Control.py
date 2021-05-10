@@ -35,6 +35,7 @@ class GraphCtrl:
     def _chooseInputFile(self):
         filepath = self._view.getPathFile()
         if filepath:
+            print("AZAZ")
             self._model.graph.initGraphFile(filepath)
             self._readGraph()
 

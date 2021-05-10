@@ -12,12 +12,12 @@ def main():
 	app = QApplication(sys.argv)
 
 	view = GraphUI()
-	view.show()
 
 	model = GraphModel()
 
 	GraphCtrl(model, view)
 	
+	view.show()
 	sys.exit(app.exec())
 
 if __name__ == "__main__":

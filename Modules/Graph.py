@@ -16,8 +16,8 @@ class Graph:
         self._adj = {}
         self._directed = False
         self._weighted = False
-        self._inputType = "adj list"
-        self._filePath = path.join(getcwd(), "input.txt").replace("\\", "/")
+        self._filePath = None
+        self._inputType ="Adjacency List"
         self._algoValues = {}
 
     def getFields(self):
@@ -104,6 +104,7 @@ class Graph:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
                     self.addVertices(max(self._adj.keys()))
+                    print(self._adj)
                 elif self._inputType == "Adjacency Matrix":
                     matrix = []
                     while True:
@@ -112,9 +113,9 @@ class Graph:
                             break
                         matrix.append(temp)
                     self._adj = self.convert_matrix_to_list(matrix)
-        except FileNotFoundError:
+        except (FileNotFoundError, TypeError):
             self.showError("Path error")
-        except IndexError:
+        except (IndexError, ValueError):
             self.showError("File not match input type")
 
 
@@ -166,6 +167,7 @@ class Graph:
             return 0, [start]
         else:
             self.showError("Minimal path error")
+            return None, None
 
 
     def coloring(self,graph):
@@ -209,4 +211,4 @@ class Graph:
 
     def initGraphFile(self, filepath):
         self._filePath = filepath
-        self.readGraph()
+        

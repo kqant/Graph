@@ -40,6 +40,7 @@ class GraphUI(QMainWindow):
         self._setObjectsNames()
         self._setText()
         self._setGeometry()
+        self.figure.clf()
 
 
     def _createButtons(self):
@@ -199,6 +200,7 @@ class GraphUI(QMainWindow):
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", path.join(getcwd(), "input.txt"), options=options)
         if fileName:
+            print(fileName)
             return fileName
 
 

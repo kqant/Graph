@@ -35,7 +35,7 @@ def drawDefault(view, adj, is_dir, weighted):
 
 def drawMinPath(view, adj, is_dir, weighted, path):
     view.figure.clf()
-    
+    print(adj, is_dir, weighted, sep="\n-----\n")
     if (is_dir):
         G = nx.DiGraph()
     else:
@@ -115,6 +115,8 @@ def chooseDrawType(graphctrl):
         if start == -1 and end == -1:
             return
         length, path = graphctrl._model.graph.minPathFind(start, end, graphctrl._model.graph._adj)
+        if length == None:
+            return
         drawMinPath(graphctrl._view, adj, is_dir, weighted, path)
     
     elif algo == "Coloring":
