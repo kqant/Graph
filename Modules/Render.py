@@ -3,10 +3,10 @@ import networkx as nx
 
 
 
-def drawDefault(view, adj, is_dir, weighted):
+def drawDefault(view, adj, isDir, weighted):
     view.figure.clf()
     
-    if (is_dir):
+    if (isDir):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -33,9 +33,9 @@ def drawDefault(view, adj, is_dir, weighted):
     view.canvas.draw()
 
 
-def drawMinPath(view, adj, is_dir, weighted, path):
+def drawMinPath(view, adj, isDir, weighted, path):
     view.figure.clf()
-    if (is_dir):
+    if (isDir):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -67,9 +67,9 @@ def drawMinPath(view, adj, is_dir, weighted, path):
     view.canvas.draw()
 
 
-def drawColoring(view, adj, is_dir, weighted, colors):
+def drawColoring(view, adj, isDir, weighted, colors):
     view.figure.clf()
-    if (is_dir):
+    if (isDir):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -104,21 +104,21 @@ def drawColoring(view, adj, is_dir, weighted, colors):
 
 def chooseDrawType(graphctrl):
     algo = graphctrl.view.comboBoxAlgo.currentText()
-    adj, is_dir, weighted, algoValues = graphctrl.model.graph.getFields()
+    adj, isDir, weighted, algoValues = graphctrl.model.graph.getFields()
     
     if algo == "Default":
-        drawDefault(graphctrl.view, adj, is_dir, weighted)
+        drawDefault(graphctrl.view, adj, isDir, weighted)
     
     elif algo == "Min Path Finding":
         start, end = graphctrl.view.minPathTakeInput()
-        if start == -1 and end == -1:
+        if start == None:
             return
         length, path = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph.adj)
         if length == None:
             return
-        drawMinPath(graphctrl.view, adj, is_dir, weighted, path)
+        drawMinPath(graphctrl.view, adj, isDir, weighted, path)
     
     elif algo == "Coloring":
         colors = graphctrl.model.graph.coloring(adj)
-        drawColoring(graphctrl.view, adj, is_dir, weighted, colors)
+        drawColoring(graphctrl.view, adj, isDir, weighted, colors)
 

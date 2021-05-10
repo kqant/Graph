@@ -181,18 +181,18 @@ class Graph:
                 tmp[x] = 0
         vertList = list(tmp.items())
         vertList.sort(key=lambda i: i[1])
-        colored = {x: -1 for x in graph}
+        colored = {x: None for x in graph}
         flag = True
         cl = 0
         smList = []
         for v in vertList:
             v = v[0]
-            if colored[v] == -1:
+            if colored[v] == None:
                 colored[v] = cl
                 smList.append(v)
                 for j in vertList:
                     j = j[0]
-                    if colored[j] == -1:
+                    if colored[j] == None:
                         for sm in smList:
                             if sm in graph[j] or j in graph[sm] and flag:
                                 flag = False
