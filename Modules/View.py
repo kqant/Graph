@@ -231,10 +231,10 @@ class GraphUI(QMainWindow):
         v1, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your start vertice:')
         if not ok:
             self.guiErrorShow("Doesn't exist vertice")
-            return
+            return -1, -1
         v2, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your end vertice:')
         if not ok:
             self.guiErrorShow("Doesn't exist vertice")
-            return
+            return -1, -1
         # print(v1, v2)
         return v1, v2

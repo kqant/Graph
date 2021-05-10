@@ -103,6 +103,7 @@ class Graph:
                         else:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
+                    self.addVertices(max(self._adj.keys()))
                 elif self._inputType == "Adjacency Matrix":
                     matrix = []
                     while True:

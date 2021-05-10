@@ -104,6 +104,8 @@ def chooseDrawType(graphctrl):
     
     elif algo == "Min Path Finding":
         start, end = graphctrl._view.minPathTakeInput()
+        if start == -1 and end == -1:
+            return
         length, path = graphctrl._model.graph.minPathFind(start, end, graphctrl._model.graph._adj)
         drawMinPath(graphctrl._view, adj, is_dir, weighted, path)
     
