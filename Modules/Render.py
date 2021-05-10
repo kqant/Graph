@@ -26,7 +26,7 @@ def drawDefault(view, adj, is_dir, weighted):
     view.canvas.draw()
 
 
-def drawMinPath(view, path):
+def drawMinPath(view, path, adj, is_dir, weighted):
     view.figure.clf()
     
     if (is_dir):
@@ -52,7 +52,7 @@ def drawMinPath(view, path):
     view.canvas.draw()
 
 
-def drawColoring(view, colors):
+def drawColoring(view, colors, adj, is_dir, weighted):
     view.figure.clf()
     
     if (is_dir):
