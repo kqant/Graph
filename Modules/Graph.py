@@ -5,48 +5,47 @@ from collections import deque
 from ast import literal_eval
 
 class Graph:
-    _adj: dict
-    _directed: bool
-    _weighted: bool
-    _filePath: str
-    _inputType: str
-    _algoValues: dict
+    adj: dict
+    directed: bool
+    weighted: bool
+    filePath: str
+    inputType: str
+    algoValues: dict
 
 
     def __init__(self):
-        self._adj = {}
-        self._directed = False
-        self._weighted = False
-        self._filePath = None
-        self._inputType ="Adjacency List"
-        self._algoValues = {}
+        self.adj = {}
+        self.directed = False
+        self.weighted = False
+        self.filePath = None
+        self.inputType ="Adjacency List"
+        self.algoValues = {}
 
     def getFields(self):
-        return self._adj, self._directed, self._weighted, self._algoValues
+        return self.adj, self.directed, self.weighted, self.algoValues
 
 
     def print(self):
-        for key, value in self._adj.items():
+        for key, value in self.adj.items():
             print(f"[{key}] -> ", end="")
             print(f"{value}")
 
 
     def addVertices(self, *verts):
         for v in verts:
-            if v not in self._adj.keys():
-                self._adj[v] = {}
+            if v not in self.adj.keys():
+                self.adj[v] = {}
 
 
     def addEdges(self, start, ends):
         self.addVertices(*range(1, max(start, *ends)+1))
-        self._adj[start] = {**self._adj[start], **ends}
-        # self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
-        if not self._directed:
+        self.adj[start] = {**self.adj[start], **ends}
+        if not self.directed:
             for end in ends.keys():
-                if end in self._adj.keys():
-                    self._adj[end] = {**self._adj[end], **{start: ends[end]}}
+                if end in self.adj.keys():
+                    self.adj[end] = {**self.adj[end], **{start: ends[end]}}
                 else:
-                    self._adj[end] = {start: ends[end]}
+                    self.adj[end] = {start: ends[end]}
 
 
     def convert_matrix_to_list(self, matrix):
@@ -73,52 +72,52 @@ class Graph:
 
 
     def setFields(self, values):
-        self._adj = values["_adj"]
-        self._directed = values["_directed"]
-        self._weighted = values["_weighted"]
-        self._algoValues = values["_algoValues"]
+        self.adj = values["adj"]
+        self.directed = values["directed"]
+        self.weighted = values["weighted"]
+        self.algoValues = values["algoValues"]
 
 
     def saveGraph(self, path):
         with open(path, "w") as file:
             tempdict = {}
-            tempdict["_adj"] = self._adj
-            tempdict["_directed"] = self._directed
-            tempdict["_weighted"] = self._weighted
-            tempdict["_algoValues"] = self._algoValues
+            tempdict["adj"] = self.adj
+            tempdict["directed"] = self.directed
+            tempdict["weighted"] = self.weighted
+            tempdict["algoValues"] = self.algoValues
             file.write(f"{tempdict}")
 
 
     def readGraph(self):
         try:
-            with open(self._filePath, "r") as fin:
-                if self._inputType == "Adjacency List":
-                    self._adj = {}
+            with open(self.filePath, "r") as fin:
+                if self.inputType == "Adjacency List":
+                    self.adj = {}
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
                         if temp == []:
                             break
-                        if self._weighted:
+                        if self.weighted:
                             for i in range(0, len(temp), 3):
                                 self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
                         else:
                             for i in range(0, len(temp), 2):
                                 self.addEdges(temp[i], {temp[i+1]:1})
-                    self.addVertices(max(self._adj.keys()))
-                elif self._inputType == "Adjacency Matrix":
+                    self.addVertices(max(self.adj.keys()))
+                elif self.inputType == "Adjacency Matrix":
                     matrix = []
                     while True:
                         temp = [int(i) for i in fin.readline().split()]
                         if temp == []:
                             break
                         matrix.append(temp)
-                    self._adj = self.convert_matrix_to_list(matrix)
+                    self.adj = self.convert_matrix_to_list(matrix)
         except (FileNotFoundError, TypeError):
             self.showError("Path error")
-            self._adj = {}
+            self.adj = {}
         except (IndexError, ValueError):
             self.showError("File not match input type")
-            self._adj = {}
+            self.adj = {}
 
 
     def showError(self, error):
@@ -149,7 +148,7 @@ class Graph:
             return None, None
         queue = deque()
         visited = {start: 0}
-        tmp_path = {}
+        tmpPath = {}
         queue.append(start)
         while queue:
             v = queue.popleft()
@@ -157,13 +156,13 @@ class Graph:
                 if u not in visited or visited[v] + graph[v][u] < visited[u]:
                     visited[u] = visited[v] + graph[v][u]
                     queue.append(u)
-                    tmp_path[u] = v
+                    tmpPath[u] = v
         v = goal
         path = deque()
         path.append(v)
-        if v in tmp_path:
+        if v in tmpPath:
             while v != start:
-                v = tmp_path[v]
+                v = tmpPath[v]
                 path.appendleft(v)
             return visited[goal], list(path)
         elif start == goal:
@@ -174,41 +173,37 @@ class Graph:
 
 
     def coloring(self,graph):
-        # colors = {0: (255, 0, 0), 1: (255, 255, 0), 2: (0, 128, 0), 3: (0, 0, 255), 4: (255, 165, 0),
-        #             5: (75, 0, 130), 6: (238, 130, 238), 7: (0,255,251), 8: (0, 255, 0), 9: (25, 25, 112),10: (0, 128, 0),
-        #             11: (0, 255, 130), 12: (128, 128, 0), 13: (119, 136, 153), 14: (47, 79, 79), 15: (255, 255, 255)}
         tmp = {x: 0 for x in graph}
         for x in graph:
             if graph[x] != set():
                 tmp[x] = len(graph[x].keys())
             else:
                 tmp[x] = 0
-        vert_list = list(tmp.items())
-        vert_list.sort(key=lambda i: i[1])
+        vertList = list(tmp.items())
+        vertList.sort(key=lambda i: i[1])
         colored = {x: -1 for x in graph}
         flag = True
         cl = 0
-        sm_list = []
-        for v in vert_list:
+        smList = []
+        for v in vertList:
             v = v[0]
             if colored[v] == -1:
                 colored[v] = cl
-                sm_list.append(v)
-                for j in vert_list:
+                smList.append(v)
+                for j in vertList:
                     j = j[0]
                     if colored[j] == -1:
-                        for sm in sm_list:
+                        for sm in smList:
                             if sm in graph[j] or j in graph[sm] and flag:
                                 flag = False
                         if flag:
                             colored[j] = cl
-                            sm_list.append(j)
+                            smList.append(j)
                         flag = True
-                sm_list = []
+                smList = []
                 cl += 1
         res = {}
         existColors = {}
-        # colored = {1: 1, 2: 0, 3: 0}
         for i in colored:
             if colored[i] in existColors.keys():
                 res[i] = existColors[colored[i]]
@@ -219,5 +214,5 @@ class Graph:
 
 
     def initGraphFile(self, filepath):
-        self._filePath = filepath
+        self.filePath = filepath
         

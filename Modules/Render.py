@@ -113,7 +113,7 @@ def chooseDrawType(graphctrl):
         start, end = graphctrl.view.minPathTakeInput()
         if start == -1 and end == -1:
             return
-        length, path = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph._adj)
+        length, path = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph.adj)
         if length == None:
             return
         drawMinPath(graphctrl.view, adj, is_dir, weighted, path)

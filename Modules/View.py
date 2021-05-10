@@ -25,25 +25,25 @@ class GraphUI(QMainWindow):
         self.graphwidget = QWidget(self)
         self.generalLayout = QVBoxLayout(self.graphwidget)
 
-        self._createButtons()
-        self._createInputTypeChoose()
-        self._createInputTypeComboBox()
-        self._createAlgoLabelChoose()
-        self._createAlgoComboBox()
-        self._createChooseProperties()
-        self._createPropertiesCheckboxes()
-        self._createMenuBar()
-        self._createCanvas()
+        self.createButtons()
+        self.createInputTypeChoose()
+        self.createInputTypeComboBox()
+        self.createAlgoLabelChoose()
+        self.createAlgoComboBox()
+        self.createChooseProperties()
+        self.createPropertiesCheckboxes()
+        self.createMenuBar()
+        self.createCanvas()
 
         QMetaObject.connectSlotsByName(self)
 
-        self._setObjectsNames()
-        self._setText()
-        self._setGeometry()
+        self.setObjectsNames()
+        self.setText()
+        self.setGeometry()
         self.figure.clf()
 
 
-    def _createButtons(self):
+    def createButtons(self):
         self.buttons = {}
         buttons = {
             "Draw": (0, 0, 260, 100),
@@ -61,7 +61,7 @@ class GraphUI(QMainWindow):
         self.buttonsLayout.addLayout(buttonsLayout)
 
 
-    def _createInputTypeChoose(self):
+    def createInputTypeChoose(self):
         self.ChooseInputType = QLabel(self.centralwidget)
         font = QFont()
         font.setPointSize(11)
@@ -70,7 +70,7 @@ class GraphUI(QMainWindow):
         self.ChooseInputType.setAlignment(Qt.AlignCenter)
 
 
-    def _createInputTypeComboBox(self):
+    def createInputTypeComboBox(self):
         self.comboBoxInputType = QComboBox(self.centralwidget)
         font = QFont()
         font.setPointSize(9)
@@ -79,7 +79,7 @@ class GraphUI(QMainWindow):
         self.comboBoxInputType.addItem("")
 
 
-    def _createAlgoLabelChoose(self):
+    def createAlgoLabelChoose(self):
         self.ChooseAlgoritmnLabel = QLabel(self.centralwidget)
         font = QFont()
         font.setPointSize(11)
@@ -88,7 +88,7 @@ class GraphUI(QMainWindow):
         self.ChooseAlgoritmnLabel.setAlignment(Qt.AlignCenter)
 
 
-    def _createAlgoComboBox(self):
+    def createAlgoComboBox(self):
         self.comboBoxAlgo = QComboBox(self.centralwidget)
         font = QFont()
         font.setPointSize(9)
@@ -98,7 +98,7 @@ class GraphUI(QMainWindow):
         self.comboBoxAlgo.addItem("")
 
 
-    def _createChooseProperties(self):
+    def createChooseProperties(self):
         self.ChooseProperties = QLabel(self.centralwidget)
         font = QFont()
         font.setPointSize(11)
@@ -107,12 +107,12 @@ class GraphUI(QMainWindow):
         self.ChooseProperties.setAlignment(Qt.AlignCenter)
 
 
-    def _createPropertiesCheckboxes(self):
+    def createPropertiesCheckboxes(self):
         self.CheckBoxDirected = QCheckBox(self.centralwidget)
         self.CheckBoxWeighted = QCheckBox(self.centralwidget)
 
 
-    def _createMenuBar(self):
+    def createMenuBar(self):
         self.widget = QWidget(self.centralwidget)
         self.menubar = QMenuBar(self)
         self.statusbar = QStatusBar(self)
@@ -129,7 +129,7 @@ class GraphUI(QMainWindow):
         self.menubar.addAction(self.menuGraph.menuAction())
 
 
-    def _createCanvas(self):
+    def createCanvas(self):
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self)
@@ -137,7 +137,7 @@ class GraphUI(QMainWindow):
         self.generalLayout.addWidget(self.canvas)
 
 
-    def _setObjectsNames(self):
+    def setObjectsNames(self):
         self.setObjectName("MainWindow")
         self.centralwidget.setObjectName("centralwidget")
         self.widget.setObjectName("widget")
@@ -148,7 +148,7 @@ class GraphUI(QMainWindow):
         self.actionSave.setObjectName("actionSave")
         self.graphwidget.setObjectName("graphwidget")
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.buttonsLayout.setObjectName("horizontalLayout_2")
+        self.buttonsLayout.setObjectName("buttonsLayout")
         self.ChooseInputType.setObjectName("Choose input type")
         self.comboBoxInputType.setObjectName("Combo Box Input Type")
         self.ChooseAlgoritmnLabel.setObjectName("ChooseAlgoLabel")
@@ -159,7 +159,7 @@ class GraphUI(QMainWindow):
 
 
 
-    def _setGeometry(self):
+    def setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
         self.widget.setGeometry(QRect(150, 110, 750, 450))
         self.menubar.setGeometry(QRect(0, 0, 904, 21))
@@ -174,7 +174,7 @@ class GraphUI(QMainWindow):
         self.CheckBoxWeighted.setGeometry(QRect(20, 340, 91, 21))
 
 
-    def _setText(self):
+    def setText(self):
         self.CheckBoxWeighted.setText("Weighted")
         self.comboBoxInputType.setItemText(0, "Adjacency List")
         self.comboBoxInputType.setItemText(1, "Adjacency Matrix")
