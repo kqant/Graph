@@ -12,4 +12,4 @@ To install required modules write
 
 To launch programm write
 
-`py core.py`
+`python Core.py`
