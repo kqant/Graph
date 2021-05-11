@@ -1,6 +1,6 @@
 from os import path, getcwd
 from random import randint
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox #лох убирай, где модульность мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм?
 from collections import deque
 from ast import literal_eval
 
