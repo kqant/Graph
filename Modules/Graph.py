@@ -117,6 +117,10 @@ class Graph:
                             break
                         if self.weighted:
                             for i in range(0, len(temp), 3):
+                                if temp[i+2] < 0:
+                                    print("negative weights?")
+                                    self._adj = {}
+                                    return "negative weights?"
                                 self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
                         else:
                             for i in range(0, len(temp), 2):

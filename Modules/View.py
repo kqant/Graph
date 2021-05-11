@@ -251,5 +251,8 @@ class GraphUI(QMainWindow):
         elif error == "Doesn't exist vertice":
             msg.setWindowTitle("Doesn't exist vertice")
             msg.setText("Input correct vertice")
+        elif error == "negative weights?":
+            msg.setWindowTitle("negative weights?")
+            msg.setText("Program doesn't support negative weights")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()

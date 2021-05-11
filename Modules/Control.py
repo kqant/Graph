@@ -48,7 +48,7 @@ class GraphCtrl:
 
     def readGraph(self):
         ok = self.model.graph.readGraph()
-        if ok == "File not match input type" or ok == "Path error":
+        if ok == "File not match input type" or ok == "Path error" or ok == "negative weights?":
             self.view.showError(ok)
             return
 
