@@ -3,8 +3,8 @@ import networkx as nx
 
 
 
-def drawDefault(view, adj, isDir, weighted):
-    view.figure.clf()
+def drawDefault(figure, canvas, adj, isDir, weighted):
+    figure.clf()
     
     if (isDir):
         G = nx.DiGraph()
@@ -30,11 +30,11 @@ def drawDefault(view, adj, isDir, weighted):
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
 
-    view.canvas.draw()
+    canvas.draw()
 
 
-def drawMinPath(view, adj, isDir, weighted, path):
-    view.figure.clf()
+def drawMinPath(figure, canvas, adj, isDir, weighted, path):
+    figure.clf()
     if (isDir):
         G = nx.DiGraph()
     else:
@@ -64,11 +64,11 @@ def drawMinPath(view, adj, isDir, weighted, path):
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color=nx.get_edge_attributes(G,'color').values())
     
-    view.canvas.draw()
+    canvas.draw()
 
 
-def drawColoring(view, adj, isDir, weighted, colors):
-    view.figure.clf()
+def drawColoring(figure, canvas, adj, isDir, weighted, colors):
+    figure.clf()
     if (isDir):
         G = nx.DiGraph()
     else:
@@ -99,26 +99,25 @@ def drawColoring(view, adj, isDir, weighted, colors):
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
     
-    view.canvas.draw()
+    canvas.draw()
 
 
-def chooseDrawType(graphctrl):
-    algo = graphctrl.view.comboBoxAlgo.currentText()
-    adj, isDir, weighted, algoValues = graphctrl.model.graph.getFields()
+# def chooseDrawType(graphctrl):
+    # if algo == "Default":
+    #     drawDefault(graphctrl.view, adj, isDir, weighted)
     
-    if algo == "Default":
-        drawDefault(graphctrl.view, adj, isDir, weighted)
+    # elif algo == "Min Path Finding":
+    #     start, end = graphctrl.view.minPathTakeInput()
+    #     if start == None:
+    #         return
+    #     ok = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph.adj)
+    #     if ok == None:
+            
+    #         return
+    #     length, path = ok
+    #     drawMinPath(graphctrl.view, adj, isDir, weighted, path)
     
-    elif algo == "Min Path Finding":
-        start, end = graphctrl.view.minPathTakeInput()
-        if start == None:
-            return
-        length, path = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph.adj)
-        if length == None:
-            return
-        drawMinPath(graphctrl.view, adj, isDir, weighted, path)
-    
-    elif algo == "Coloring":
-        colors = graphctrl.model.graph.coloring(adj)
-        drawColoring(graphctrl.view, adj, isDir, weighted, colors)
+    # elif algo == "Coloring":
+    #     colors = graphctrl.model.graph.coloring(adj)
+    #     drawColoring(graphctrl.view, adj, isDir, weighted, colors)
 

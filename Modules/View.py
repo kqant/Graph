@@ -207,34 +207,49 @@ class GraphUI(QMainWindow):
         with open(path, "a"):
             utime(path, None)
 
-    
+
     def createNewFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
         fileName, _ = QFileDialog.getSaveFileName(self, "Graph Application", options=options)
 
         if fileName:
+            pre, ext = path.splitext(fileName)
+            fileName = pre + ".json"
             self.touch(fileName)
             return fileName
-
-
-    def guiErrorShow(self, error):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.information)
-        if error == "Doesn't exist vertice":
-            msg.setWindowTitle("Doesn't exist vertice")
-            msg.setText("Input correct vertice")
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec()
 
 
     def minPathTakeInput(self):
         v1, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your start vertice:')
         if not ok:
-            self.guiErrorShow("Doesn't exist vertice")
-            return None, None
+            return "Doesn't exist vertice"
         v2, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your end vertice:')
         if not ok:
-            self.guiErrorShow("Doesn't exist vertice")
-            return None, None
+            return "Doesn't exist vertice"
         return v1, v2
+
+
+    def showError(self, error):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        if error == "Path error":
+            msg.setWindowTitle("Path error")
+            msg.setText("Choose correct file.")
+        elif error == "File not match input type":
+            msg.setWindowTitle("File not match input type")
+            msg.setText("Choose file with correct graph input type.")
+        elif error == "Vertices not in graph":
+            msg.setWindowTitle("Vertices not in graph")
+            msg.setText("Select vertices in graph ")
+        elif error == "Minimal path error":
+            msg.setWindowTitle("The path between the vertices does not exist ")
+            msg.setText("Choose other vertices")
+        elif error == "File corrupted":
+            msg.setWindowTitle("File corrupted")
+            msg.setText("Fix file or choose another")
+        elif error == "Doesn't exist vertice":
+            msg.setWindowTitle("Doesn't exist vertice")
+            msg.setText("Input correct vertice")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()

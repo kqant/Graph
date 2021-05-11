@@ -1,8 +1,29 @@
 from os import path, getcwd
 from random import randint
-from PyQt5.QtWidgets import QMessageBox #лох убирай, где модульность мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм?
+from PyQt5.QtWidgets import QMessageBox
 from collections import deque
-from ast import literal_eval
+import json
+
+
+
+class MyDecoder(json.JSONDecoder):
+    def decode(self, z):
+        result = super().decode(z)
+        return self._decode(result)
+
+    def _decode(self, z):
+        if isinstance(z, str):
+            try:
+                return int(z)
+            except ValueError:
+                return z
+        elif isinstance(z, dict):
+            return {self._decode(k): self._decode(v) for k, v in z.items()}
+        elif isinstance(z, list):
+            return [self._decode(v) for v in z]
+        else:
+            return z
+
 
 class Graph:
     adj: dict
@@ -63,29 +84,26 @@ class Graph:
         return G
 
 
-    def openGraph(self, path):
+    def importGraph(self, path):
         try:
             with open(path, "r") as file:
-                    self.setFields(literal_eval(file.readline()))
+                aFile = json.load(file, cls=MyDecoder)
+                self.adj = aFile['adj']
+                self.directed = aFile['directed']
+                self.weighted = aFile['weighted']
+                self.algoValues = aFile['algoValues']
         except Exception:
-            self.showError("File corrupted")
+            return "File corrupted"
 
 
-    def setFields(self, values):
-        self.adj = values["adj"]
-        self.directed = values["directed"]
-        self.weighted = values["weighted"]
-        self.algoValues = values["algoValues"]
-
-
-    def saveGraph(self, path):
+    def exportGraph(self, path):
         with open(path, "w") as file:
-            tempdict = {}
-            tempdict["adj"] = self.adj
-            tempdict["directed"] = self.directed
-            tempdict["weighted"] = self.weighted
-            tempdict["algoValues"] = self.algoValues
-            file.write(f"{tempdict}")
+            toSaveDict = {}
+            toSaveDict["adj"] = self.adj
+            toSaveDict["directed"] = self.directed
+            toSaveDict["weighted"] = self.weighted
+            toSaveDict["algoValues"] = self.algoValues
+            json.dump(toSaveDict, fp=file, sort_keys=True, indent=4)
 
 
     def readGraph(self):
@@ -113,39 +131,20 @@ class Graph:
                         matrix.append(temp)
                     self.adj = self.convert_matrix_to_list(matrix)
         except (FileNotFoundError, TypeError):
-            self.showError("Path error")
             self.adj = {}
+            print("Path error")
+            return "Path error"
         except (IndexError, ValueError):
-            self.showError("File not match input type")
             self.adj = {}
+            print("File not match input type")
+            return "File not match input type"
 
 
-    def showError(self, error):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        if error == "Path error":
-            msg.setWindowTitle("Path error")
-            msg.setText("Choose correct file.")
-        elif error == "File not match input type":
-            msg.setWindowTitle("File not match input type")
-            msg.setText("Choose file with correct graph input type.")
-        elif error == "Vertices not in graph":
-            msg.setWindowTitle("Vertices not in graph")
-            msg.setText("Select vertices in graph ")
-        elif error == "Minimal path error":
-            msg.setWindowTitle("The path between the vertices does not exist ")
-            msg.setText("Choose other vertices")
-        elif error == "File corrupted":
-            msg.setWindowTitle("File corrupted")
-            msg.setText("Fix file or choose another")
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec()
-
-
-    def minPathFind(self, start, goal, graph):
+    def minPathFind(self, start, goal):
+        graph = self.adj
         if start not in graph or goal not in graph:
-            self.showError("Vertices not in graph")
-            return None, None
+            print("Vertices not in graph")
+            return "Vertices not in graph"
         queue = deque()
         visited = {start: 0}
         tmpPath = {}
@@ -168,11 +167,12 @@ class Graph:
         elif start == goal:
             return 0, [start]
         else:
-            self.showError("Minimal path error")
-            return None, None
+            print("Minimal path error")
+            return "Minimal path error"
 
 
-    def coloring(self,graph):
+    def coloring(self):
+        graph = self.adj
         tmp = {x: 0 for x in graph}
         for x in graph:
             if graph[x]:
