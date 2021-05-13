@@ -24,6 +24,7 @@ class GraphCtrl:
         algoUse = self.view.comboBoxAlgo.currentText()
         figure, canvas, adj, directed, weighted = \
         self.view.figure, self.view.canvas, self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
+        
         if algoUse == "Default":
             self.model.functions["drawDefault"](figure, canvas, adj, directed, weighted)
         

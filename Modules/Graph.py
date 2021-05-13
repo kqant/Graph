@@ -191,12 +191,12 @@ class Graph:
         smList = []
         for v in vertList:
             v = v[0]
-            if colored[v] == None:
+            if colored[v] is None:
                 colored[v] = cl
                 smList.append(v)
                 for j in vertList:
                     j = j[0]
-                    if colored[j] == None:
+                    if colored[j] is None:
                         for sm in smList:
                             if sm in graph[j] or j in graph[sm] and flag:
                                 flag = False

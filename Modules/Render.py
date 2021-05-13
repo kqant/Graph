@@ -100,24 +100,3 @@ def drawColoring(figure, canvas, adj, isDir, weighted, colors):
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
     
     canvas.draw()
-
-
-# def chooseDrawType(graphctrl):
-    # if algo == "Default":
-    #     drawDefault(graphctrl.view, adj, isDir, weighted)
-    
-    # elif algo == "Min Path Finding":
-    #     start, end = graphctrl.view.minPathTakeInput()
-    #     if start == None:
-    #         return
-    #     ok = graphctrl.model.graph.minPathFind(start, end, graphctrl.model.graph.adj)
-    #     if ok == None:
-            
-    #         return
-    #     length, path = ok
-    #     drawMinPath(graphctrl.view, adj, isDir, weighted, path)
-    
-    # elif algo == "Coloring":
-    #     colors = graphctrl.model.graph.coloring(adj)
-    #     drawColoring(graphctrl.view, adj, isDir, weighted, colors)
-

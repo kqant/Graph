@@ -8,7 +8,7 @@
 
 To install required modules write
 
-`make`
+`pip install -r requirements.txt`
 
 To launch programm write
 
