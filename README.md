@@ -2,7 +2,7 @@
 
 <br>
 
-### Project for summer practise
+### Project for summer practice
 
 <br>
 
