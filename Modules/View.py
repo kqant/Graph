@@ -1,7 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
@@ -16,6 +15,7 @@ class GraphUI(QMainWindow):
         self.setWindowTitle("GraphDrawer")
         self.setFixedSize(900, 600)
         self.setWindowIcon(QIcon(iconPath))
+        self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
         self.centralwidget = QWidget(self)
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
 
@@ -115,14 +115,12 @@ class GraphUI(QMainWindow):
     def createMenuBar(self):
         self.widget = QWidget(self.centralwidget)
         self.menubar = QMenuBar(self)
-        self.statusbar = QStatusBar(self)
         self.menuGraph = QMenu(self.menubar)
         self.actionOpen = QAction(self)
         self.actionSave = QAction(self)
         self.actionExit = QAction(self)
 
         self.setMenuBar(self.menubar)
-        self.setStatusBar(self.statusbar)
         self.menuGraph.addAction(self.actionOpen)
         self.menuGraph.addAction(self.actionSave)
         self.menuGraph.addAction(self.actionExit)
@@ -143,7 +141,6 @@ class GraphUI(QMainWindow):
         self.widget.setObjectName("widget")
         self.menubar.setObjectName("menubar")
         self.menuGraph.setObjectName("menuGraph")
-        self.statusbar.setObjectName("statusbar")
         self.actionOpen.setObjectName("actionOpen")
         self.actionSave.setObjectName("actionSave")
         self.graphwidget.setObjectName("graphwidget")
@@ -251,8 +248,11 @@ class GraphUI(QMainWindow):
         elif error == "Doesn't exist vertice":
             msg.setWindowTitle("Doesn't exist vertice")
             msg.setText("Input correct vertice")
-        elif error == "negative weights?":
-            msg.setWindowTitle("negative weights?")
-            msg.setText("Program doesn't support negative weights")
+        elif error == "Uncorrect weights":
+            msg.setWindowTitle("Uncorrect weights")
+            msg.setText("Weights need be natural")
+        elif error == "Uncorrect vertice":
+            msg.setWindowTitle("Uncorrect vertice")
+            msg.setText("Vertice need be bigger than 0")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()

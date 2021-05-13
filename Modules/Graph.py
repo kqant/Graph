@@ -84,6 +84,52 @@ class Graph:
         return G
 
 
+    def readGraph(self):
+        try:
+            with open(self.filePath, "r") as fin:
+                if self.inputType == "Adjacency List":
+                    self.adj = {}
+                    while True:
+                        temp = [int(i) for i in fin.readline().split()]
+                        if temp == []:
+                            break
+                        if self.weighted:
+                            for i in range(0, len(temp), 3):
+                                if temp[i] <= 0 or temp[i+1] <= 0:
+                                    print("Uncorrect vertice")
+                                    self._adj = {}
+                                    return "Uncorrect vertice"
+                                elif temp[i+2] <= 0:
+                                    print("Uncorrect weights")
+                                    self._adj = {}
+                                    return "Uncorrect weights"
+                                self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
+                        else:
+                            for i in range(0, len(temp), 2):
+                                if temp[i] <= 0 or temp[i+1] <= 0:
+                                    print("Uncorrect vertice")
+                                    self._adj = {}
+                                    return "Uncorrect vertice"
+                                self.addEdges(temp[i], {temp[i+1]:1})
+                    self.addVertices(max(self.adj.keys()))
+                elif self.inputType == "Adjacency Matrix":
+                    matrix = []
+                    while True:
+                        temp = [int(i) for i in fin.readline().split()]
+                        if temp == []:
+                            break
+                        matrix.append(temp)
+                    self.adj = self.convert_matrix_to_list(matrix)
+        except (FileNotFoundError, TypeError):
+            self.adj = {}
+            print("Path error")
+            return "Path error"
+        except (IndexError, ValueError):
+            self.adj = {}
+            print("File not match input type")
+            return "File not match input type"
+
+
     def importGraph(self, path):
         try:
             with open(path, "r") as file:
@@ -104,44 +150,6 @@ class Graph:
             toSaveDict["weighted"] = self.weighted
             toSaveDict["algoValues"] = self.algoValues
             json.dump(toSaveDict, fp=file, sort_keys=True, indent=4)
-
-
-    def readGraph(self):
-        try:
-            with open(self.filePath, "r") as fin:
-                if self.inputType == "Adjacency List":
-                    self.adj = {}
-                    while True:
-                        temp = [int(i) for i in fin.readline().split()]
-                        if temp == []:
-                            break
-                        if self.weighted:
-                            for i in range(0, len(temp), 3):
-                                if temp[i+2] < 0:
-                                    print("negative weights?")
-                                    self._adj = {}
-                                    return "negative weights?"
-                                self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
-                        else:
-                            for i in range(0, len(temp), 2):
-                                self.addEdges(temp[i], {temp[i+1]:1})
-                    self.addVertices(max(self.adj.keys()))
-                elif self.inputType == "Adjacency Matrix":
-                    matrix = []
-                    while True:
-                        temp = [int(i) for i in fin.readline().split()]
-                        if temp == []:
-                            break
-                        matrix.append(temp)
-                    self.adj = self.convert_matrix_to_list(matrix)
-        except (FileNotFoundError, TypeError):
-            self.adj = {}
-            print("Path error")
-            return "Path error"
-        except (IndexError, ValueError):
-            self.adj = {}
-            print("File not match input type")
-            return "File not match input type"
 
 
     def minPathFind(self, start, goal):
