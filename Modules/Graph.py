@@ -222,7 +222,7 @@ class Graph:
             else:
                 existColors[colored[i]] = (randint(0, 255), randint(0, 255),randint(0, 255))
                 res[i] = existColors[colored[i]]
-        return res
+        return cl, res
 
 
     def initGraphFile(self, filepath):

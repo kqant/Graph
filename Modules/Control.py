@@ -41,10 +41,12 @@ class GraphCtrl:
                 return
             length, path = ok
             self.model.functions["drawMinPath"](figure, canvas, adj, directed, weighted, path)
+            self.view.showResult(algoUse, length)
         
         elif algoUse == "Coloring":
-            colors = self.model.graph.coloring()
+            q, colors = self.model.graph.coloring()
             self.model.functions["drawColoring"](figure, canvas, adj, directed, weighted, colors)
+            self.view.showResult(algoUse, q)
 
 
     def readGraph(self):

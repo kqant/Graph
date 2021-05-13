@@ -227,9 +227,21 @@ class GraphUI(QMainWindow):
         return v1, v2
 
 
+    def showResult(self, type, result):
+        msg = QMessageBox()
+        if type == "Min Path Finding":
+            msg.setWindowTitle("Min path result")
+            msg.setText(f"Min path is {result}")
+        elif type == "Coloring":
+            msg.setWindowTitle("Coloring result")
+            msg.setText(f"Colors number is {result}")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()
+
+
     def showError(self, error):
         msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
+        msg.setIcon(QMessageBox.Warning)
         if error == "Path error":
             msg.setWindowTitle("Path error")
             msg.setText("Choose correct file.")

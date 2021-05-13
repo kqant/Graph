@@ -6,10 +6,10 @@
 
 <br>
 
-To install required modules write
+> ⚠️ With a large number of vertices and edges the program will use a lot of computer resources
 
+To install required modules write  
 `pip install -r requirements.txt`
 
-To launch programm write
-
+To launch programm write  
 `python Core.py`
