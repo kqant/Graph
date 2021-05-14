@@ -1,28 +1,6 @@
-from os import path, getcwd
+
 from random import randint
-from PyQt5.QtWidgets import QMessageBox
 from collections import deque
-import json
-
-
-
-class MyDecoder(json.JSONDecoder):
-    def decode(self, z):
-        result = super().decode(z)
-        return self._decode(result)
-
-    def _decode(self, z):
-        if isinstance(z, str):
-            try:
-                return int(z)
-            except ValueError:
-                return z
-        elif isinstance(z, dict):
-            return {self._decode(k): self._decode(v) for k, v in z.items()}
-        elif isinstance(z, list):
-            return [self._decode(v) for v in z]
-        else:
-            return z
 
 
 class Graph:
@@ -124,36 +102,11 @@ class Graph:
                         matrix.append(temp)
                     self.adj = self.convert_matrix_to_list(matrix)
         except (FileNotFoundError, TypeError):
-            self.adj = {}
-            print("Path error")
-            return "Path error"
+            raise Exception("Path Error")
         except (IndexError, ValueError):
             self.adj = {}
             print("File not match input type")
             return "File not match input type"
-
-
-    def importGraph(self, path):
-        try:
-            with open(path, "r") as file:
-                aFile = json.load(file, cls=MyDecoder)
-                self.adj = aFile['adj']
-                self.directed = aFile['directed']
-                self.weighted = aFile['weighted']
-                self.algoValues = aFile['algoValues']
-        except Exception:
-            return "File corrupted"
-
-
-    def exportGraph(self, path):
-        with open(path, "w") as file:
-            toSaveDict = {}
-            toSaveDict["adj"] = self.adj
-            toSaveDict["directed"] = self.directed
-            toSaveDict["weighted"] = self.weighted
-            toSaveDict["algoValues"] = self.algoValues
-            json.dump(toSaveDict, fp=file, sort_keys=True, indent=4)
-
 
     def minPathFind(self, start, goal):
         graph = self.adj
