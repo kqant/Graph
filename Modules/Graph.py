@@ -115,7 +115,10 @@ class Graph:
                 elif self.inputType == "Adjacency Matrix":
                     matrix = []
                     while True:
-                        temp = [int(i) for i in fin.readline().split()]
+                        if self.weighted:
+                            temp = [int(i) for i in fin.readline().split()]
+                        else:
+                            temp = [1 if int(i) else 0 for i in fin.readline().split()]
                         if temp == []:
                             break
                         matrix.append(temp)
