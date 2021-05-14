@@ -34,6 +34,8 @@ class GraphUI(QMainWindow):
         self.createPropertiesCheckboxes()
         self.createMenuBar()
         self.createCanvas()
+        self.createMinPathInput()
+        self.createAlgoOutput()
 
         QMetaObject.connectSlotsByName(self)
 
@@ -43,23 +45,44 @@ class GraphUI(QMainWindow):
         self.figure.clf()
 
 
+
+
     def createButtons(self):
         self.buttons = {}
         buttons = {
-            "Draw": (0, 0, 260, 100),
-            "Read": (0, 1, 260, 100),
-            "Choose Input File": (0, 2, 260, 100),
+            "Input File": (0, 5, 105, 30),
+            "⭯": (0, 70, 30, 30),
+            "Draw": (45, 5, 140, 55),
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
             self.buttons[btnText] = QPushButton(btnText)
             self.buttons[btnText].setFixedSize(prop[2], prop[3])
             font = QFont()
-            font.setPointSize(18)
+            if btnText == "⭯":
+                font.setPointSize(18)
+            else:
+                font.setPointSize(12)
             self.buttons[btnText].setFont(font)
             buttonsLayout.addWidget(self.buttons[btnText], prop[0], prop[1])
         self.buttonsLayout.addLayout(buttonsLayout)
 
+    def createMinPathInput(self):
+        self.TextMinPathStart = QLineEdit(self.centralwidget)
+        self.TextMinPathGoal = QLineEdit(self.centralwidget)
+        font = QFont()
+        font.setPointSize(11)
+        self.TextMinPathStart.setFont(font)
+        self.TextMinPathGoal.setFont(font)
+        self.TextMinPathStart.setPlaceholderText("Start")
+        self.TextMinPathGoal.setPlaceholderText("Goal")
+
+
+    def createAlgoOutput(self):
+        font = QFont()
+        font.setPointSize(11)
+        self.AlgoOutput = QLineEdit(self.centralwidget)
+        self.AlgoOutput.setText(f"Output:")
 
     def createInputTypeChoose(self):
         self.ChooseInputType = QLabel(self.centralwidget)
@@ -135,6 +158,7 @@ class GraphUI(QMainWindow):
         self.generalLayout.addWidget(self.canvas)
 
 
+
     def setObjectsNames(self):
         self.setObjectName("MainWindow")
         self.centralwidget.setObjectName("centralwidget")
@@ -153,6 +177,9 @@ class GraphUI(QMainWindow):
         self.ChooseProperties.setObjectName("ChooseProperties")
         self.CheckBoxDirected.setObjectName("CheckBoxDirected")
         self.CheckBoxWeighted.setObjectName("CheckBoxWeighted")
+        self.TextMinPathStart.setObjectName("TextMinPathStart")
+        self.TextMinPathGoal.setObjectName("TextMinPathStart")
+        self.AlgoOutput.setObjectName("lgoOutput")
 
 
 
@@ -160,15 +187,20 @@ class GraphUI(QMainWindow):
         self.centralwidget.setGeometry(0, 0, 900, 600)
         self.widget.setGeometry(QRect(150, 110, 750, 450))
         self.menubar.setGeometry(QRect(0, 0, 904, 21))
-        self.graphwidget.setGeometry(180, 130, 700, 450)
-        self.horizontalLayoutWidget.setGeometry(QRect(0, 0, 900, 100))
-        self.ChooseInputType.setGeometry(QRect(20, 120, 150, 30))
-        self.comboBoxInputType.setGeometry(QRect(20, 160, 150, 30))
-        self.ChooseAlgoritmnLabel.setGeometry(QRect(20, 200, 150, 30))
-        self.comboBoxAlgo.setGeometry(QRect(20, 240, 150, 30))
-        self.ChooseProperties.setGeometry(QRect(20, 280, 150, 30))
-        self.CheckBoxDirected.setGeometry(QRect(20, 320, 91, 21))
-        self.CheckBoxWeighted.setGeometry(QRect(20, 340, 91, 21))
+        self.graphwidget.setGeometry(140, 15, 760, 590)
+        self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 100))
+        self.ChooseInputType.setGeometry(QRect(0, 120, 150, 30))
+        self.comboBoxInputType.setGeometry(QRect(5, 155, 140, 30))
+        self.ChooseAlgoritmnLabel.setGeometry(QRect(0, 200, 140, 30))
+        self.comboBoxAlgo.setGeometry(QRect(5, 235, 140, 30))
+        self.ChooseProperties.setGeometry(QRect(0, 280, 145, 30))
+        self.CheckBoxDirected.setGeometry(QRect(5, 310, 91, 21))
+        self.CheckBoxWeighted.setGeometry(QRect(5, 330, 91, 21))
+        self.TextMinPathStart.setGeometry(QRect(15, 370, 50, 30))
+        self.TextMinPathGoal.setGeometry(QRect(85, 370, 50, 30))
+        self.AlgoOutput.setGeometry(35, 410, 80, 30)
+
+
 
 
     def setText(self):

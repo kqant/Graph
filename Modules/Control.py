@@ -10,8 +10,8 @@ class GraphCtrl:
 
     def _connectButtons(self):
         self.view.buttons["Draw"].clicked.connect(partial(self.chooseGraphToDraw))
-        self.view.buttons["Choose Input File"].clicked.connect(partial(self.chooseInputFile))
-        self.view.buttons["Read"].clicked.connect(partial(self.readGraph))
+        self.view.buttons["Input File"].clicked.connect(partial(self.chooseInputFile))
+        self.view.buttons["⭯"].clicked.connect(partial(self.readGraph))
         self.view.CheckBoxDirected.stateChanged.connect(partial(self.changeDir))
         self.view.CheckBoxWeighted.stateChanged.connect(partial(self.changeWeight))
         self.view.actionOpen.triggered.connect(partial(self.openGraph))
