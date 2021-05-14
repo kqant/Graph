@@ -9,6 +9,7 @@ from os import path, getcwd, utime
 
 iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
 
+
 class GraphUI(QMainWindow):
     def __init__(self, parent = None):
         super(GraphUI, self).__init__(parent)
@@ -32,7 +33,6 @@ class GraphUI(QMainWindow):
         self.createAlgoComboBox()
         self.createChooseProperties()
         self.createPropertiesCheckboxes()
-        self.createMenuBar()
         self.createCanvas()
         self.createMinPathInput()
         self.createAlgoOutput()
@@ -43,9 +43,6 @@ class GraphUI(QMainWindow):
         self.setText()
         self.setGeometry()
         self.figure.clf()
-
-
-
 
     def createButtons(self):
         self.buttons = {}
@@ -77,7 +74,6 @@ class GraphUI(QMainWindow):
         self.TextMinPathStart.setPlaceholderText("Start")
         self.TextMinPathGoal.setPlaceholderText("Goal")
 
-
     def createAlgoOutput(self):
         font = QFont()
         font.setPointSize(11)
@@ -92,7 +88,6 @@ class GraphUI(QMainWindow):
         self.ChooseInputType.setTextFormat(Qt.PlainText)
         self.ChooseInputType.setAlignment(Qt.AlignCenter)
 
-
     def createInputTypeComboBox(self):
         self.comboBoxInputType = QComboBox(self.centralwidget)
         font = QFont()
@@ -101,7 +96,6 @@ class GraphUI(QMainWindow):
         self.comboBoxInputType.addItem("")
         self.comboBoxInputType.addItem("")
 
-
     def createAlgoLabelChoose(self):
         self.ChooseAlgoritmnLabel = QLabel(self.centralwidget)
         font = QFont()
@@ -109,8 +103,6 @@ class GraphUI(QMainWindow):
         self.ChooseAlgoritmnLabel.setFont(font)
         self.ChooseAlgoritmnLabel.setTextFormat(Qt.PlainText)
         self.ChooseAlgoritmnLabel.setAlignment(Qt.AlignCenter)
-
-
     def createAlgoComboBox(self):
         self.comboBoxAlgo = QComboBox(self.centralwidget)
         font = QFont()
@@ -120,7 +112,6 @@ class GraphUI(QMainWindow):
         self.comboBoxAlgo.addItem("")
         self.comboBoxAlgo.addItem("")
 
-
     def createChooseProperties(self):
         self.ChooseProperties = QLabel(self.centralwidget)
         font = QFont()
@@ -129,26 +120,9 @@ class GraphUI(QMainWindow):
         self.ChooseProperties.setTextFormat(Qt.PlainText)
         self.ChooseProperties.setAlignment(Qt.AlignCenter)
 
-
     def createPropertiesCheckboxes(self):
         self.CheckBoxDirected = QCheckBox(self.centralwidget)
         self.CheckBoxWeighted = QCheckBox(self.centralwidget)
-
-
-    def createMenuBar(self):
-        self.widget = QWidget(self.centralwidget)
-        self.menubar = QMenuBar(self)
-        self.menuGraph = QMenu(self.menubar)
-        self.actionOpen = QAction(self)
-        self.actionSave = QAction(self)
-        self.actionExit = QAction(self)
-
-        self.setMenuBar(self.menubar)
-        self.menuGraph.addAction(self.actionOpen)
-        self.menuGraph.addAction(self.actionSave)
-        self.menuGraph.addAction(self.actionExit)
-        self.menubar.addAction(self.menuGraph.menuAction())
-
 
     def createCanvas(self):
         self.figure = plt.figure()
@@ -157,13 +131,10 @@ class GraphUI(QMainWindow):
         self.generalLayout.addWidget(self.toolbar)
         self.generalLayout.addWidget(self.canvas)
 
-
-
     def setObjectsNames(self):
         self.setObjectName("MainWindow")
         self.centralwidget.setObjectName("centralwidget")
         self.widget.setObjectName("widget")
-        self.menubar.setObjectName("menubar")
         self.menuGraph.setObjectName("menuGraph")
         self.actionOpen.setObjectName("actionOpen")
         self.actionSave.setObjectName("actionSave")
@@ -181,12 +152,9 @@ class GraphUI(QMainWindow):
         self.TextMinPathGoal.setObjectName("TextMinPathStart")
         self.AlgoOutput.setObjectName("lgoOutput")
 
-
-
     def setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
         self.widget.setGeometry(QRect(150, 110, 750, 450))
-        self.menubar.setGeometry(QRect(0, 0, 904, 21))
         self.graphwidget.setGeometry(140, 15, 760, 590)
         self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 100))
         self.ChooseInputType.setGeometry(QRect(0, 120, 150, 30))
@@ -199,9 +167,6 @@ class GraphUI(QMainWindow):
         self.TextMinPathStart.setGeometry(QRect(15, 370, 50, 30))
         self.TextMinPathGoal.setGeometry(QRect(85, 370, 50, 30))
         self.AlgoOutput.setGeometry(35, 410, 80, 30)
-
-
-
 
     def setText(self):
         self.CheckBoxWeighted.setText("Weighted")
@@ -223,7 +188,6 @@ class GraphUI(QMainWindow):
         self.actionSave.setText("Export")
         self.actionExit.setText("Exit")
 
-
     def getPathFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
@@ -231,11 +195,9 @@ class GraphUI(QMainWindow):
         if fileName:
             return fileName
 
-
     def touch(self, path):
         with open(path, "a"):
             utime(path, None)
-
 
     def createNewFile(self):
         options = QFileDialog.Options()
@@ -248,7 +210,6 @@ class GraphUI(QMainWindow):
             self.touch(fileName)
             return fileName
 
-
     def minPathTakeInput(self):
         v1, ok = QInputDialog.getInt(self, 'Input dialog', 'Enter your start vertice:')
         if not ok:
@@ -257,7 +218,6 @@ class GraphUI(QMainWindow):
         if not ok:
             return "Doesn't exist vertice"
         return v1, v2
-
 
     def showResult(self, type, result):
         msg = QMessageBox()
@@ -269,7 +229,6 @@ class GraphUI(QMainWindow):
             msg.setText(f"Colors number is {result}")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
-
 
     def showError(self, error):
         msg = QMessageBox()
