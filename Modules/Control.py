@@ -50,6 +50,7 @@ class GraphCtrl:
 
 
     def readGraph(self):
+        self.changeInputType()
         ok = self.model.graph.readGraph()
         if ok in ["File not match input type", "Path error", "Uncorrect weights", "Uncorrect vertice"]:
             self.view.showError(ok)
@@ -57,7 +58,7 @@ class GraphCtrl:
 
 
     def changeInputType(self):
-        self.model.graph._inputType = self.view.comboBoxInputType.currentText()
+        self.model.graph.inputType = self.view.comboBoxInputType.currentText()
 
 
     def chooseInputFile(self):
