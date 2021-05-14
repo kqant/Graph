@@ -14,10 +14,6 @@ class GraphCtrl:
         self.view.buttons["⭯"].clicked.connect(partial(self.readGraph))
         self.view.CheckBoxDirected.stateChanged.connect(partial(self.changeDir))
         self.view.CheckBoxWeighted.stateChanged.connect(partial(self.changeWeight))
-        self.view.actionOpen.triggered.connect(partial(self.openGraph))
-        self.view.actionSave.triggered.connect(partial(self.saveGraph))
-        self.view.actionExit.triggered.connect(partial(self.exit))
-
 
     def chooseGraphToDraw(self):
         self.changeInputType()

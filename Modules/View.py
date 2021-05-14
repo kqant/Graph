@@ -134,10 +134,6 @@ class GraphUI(QMainWindow):
     def setObjectsNames(self):
         self.setObjectName("MainWindow")
         self.centralwidget.setObjectName("centralwidget")
-        self.widget.setObjectName("widget")
-        self.menuGraph.setObjectName("menuGraph")
-        self.actionOpen.setObjectName("actionOpen")
-        self.actionSave.setObjectName("actionSave")
         self.graphwidget.setObjectName("graphwidget")
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.buttonsLayout.setObjectName("buttonsLayout")
@@ -154,7 +150,6 @@ class GraphUI(QMainWindow):
 
     def setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
-        self.widget.setGeometry(QRect(150, 110, 750, 450))
         self.graphwidget.setGeometry(140, 15, 760, 590)
         self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 100))
         self.ChooseInputType.setGeometry(QRect(0, 120, 150, 30))
@@ -183,10 +178,6 @@ class GraphUI(QMainWindow):
         self.CheckBoxDirected.setText("Directed")
         self.ChooseProperties.setText("Choose properties")
 
-        self.menuGraph.setTitle("File")
-        self.actionOpen.setText("Import")
-        self.actionSave.setText("Export")
-        self.actionExit.setText("Exit")
 
     def getPathFile(self):
         options = QFileDialog.Options()
