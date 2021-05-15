@@ -118,7 +118,8 @@ class GraphUI(QMainWindow):
     def getPathFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", getcwd(), "Graph files (*.list *.mat *.listw *.listwd *.listd *.matw *.matd *.matwd)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", getcwd(),
+                                                  "Graph files (*.list *.mat *.listw *.listwd *.listd *.matw *.matd *.matwd)", options=options)
         if fileName:
             return fileName
 
