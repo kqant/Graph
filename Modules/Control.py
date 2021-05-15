@@ -20,6 +20,7 @@ class GraphCtrl:
         filepath = self.view.getPathFile()
         if filepath:
             self.model.graph.initGraphFile(filepath)
+            self.view.buttons["⭯"].setEnabled(True)
             self._updateGraph()
 
 
