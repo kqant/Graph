@@ -109,9 +109,9 @@ class GraphUI(QMainWindow):
     def _setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
         self.graphwidget.setGeometry(140, 0, 760, 600)
-        self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 200))
-        self.TextMinPathStart.setGeometry(QRect(5, 190, 68, 30))
-        self.TextMinPathGoal.setGeometry(QRect(76, 190, 68, 30))
+        self.horizontalLayoutWidget.setGeometry(QRect(5, 10, 140, 138))
+        self.TextMinPathStart.setGeometry(QRect(5, 150, 68, 30))
+        self.TextMinPathGoal.setGeometry(QRect(76, 150, 68, 30))
         self.AlgoOutput.setGeometry(5, 562, 140, 30)
 
 
