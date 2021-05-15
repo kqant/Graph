@@ -38,6 +38,10 @@ class GraphCtrl:
         self.view.canvas.draw()
 
 
+    def _clearGraph(self):
+        self.view.figure.clf()
+
+
     def _coloringGraph(self):
         try:
             q, colors = self.model.graph.coloring()
@@ -72,4 +76,8 @@ class GraphCtrl:
         self.view.figure.clf()
         self.model.functions["drawMinPath"](adj, dir, w, path)
         self.view.canvas.draw()
+
+
+    def _aboutAuthors(self):
+        self.view.aboutAuthors()
 
