@@ -17,9 +17,17 @@ class Graph:
         self.weighted = False
         self.filePath = None
         self.funcRead = {
-                        ".list" : self._readList,
-                        ".mat" : self._readMatrix,
-                    }
+            ".list": (".list", False, False,),
+            ".mat": (".mat", False, False),
+            ".listw": (".list", True, False),
+            ".listd": (".list", True, False),
+            ".listwd": ('.list', True, True),
+            ".listdw": ('.list', True, True),
+            ".matw": (".mat", True, False),
+            ".matd": (".mat", False, True),
+            ".matdw": (".mat", True, True),
+            ".matwd": (".mat", True, True)
+        }
 
 
     def _addVertices(self, *verts):
@@ -56,7 +64,6 @@ class Graph:
 
     def _readList(self):
         with open(self.filePath, "r") as fin:
-            self.directed, self.weighted = map(bool, map(int, fin.readline().split()))
             while True:
                 temp = [int(i) for i in fin.readline().split()]
                 if temp == []:
@@ -82,7 +89,6 @@ class Graph:
 
     def _readMatrix(self):
         with open(self.filePath, "r") as fin:
-            self.directed, self.weighted = map(bool, map(int, fin.readline().split()))
             matrix = []
             while True:
                 if self.weighted:
@@ -111,7 +117,13 @@ class Graph:
             raise Exception("Choose file first!")
 
         try:
-            self.funcRead[file_ext]()
+            ex,w,d = self.funcRead[file_ext]
+            self.weighted = w
+            self.directed = d
+            if ex == '.list':
+                self._readList()
+            elif ex == '.mat':
+                self._readMatrix()
         except KeyError:
             raise Exception(f"Incorrect file type: {file_ext}")
         except (FileNotFoundError, TypeError):
