@@ -92,7 +92,7 @@ class GraphUI(QMainWindow):
         self.AlgoOutput.setFont(font)
         self.AlgoOutput.setReadOnly(True)
         self.AlgoOutput.setAlignment(Qt.AlignHCenter)
-        self.AlgoOutput.setText("Algorithm result.")
+        self.AlgoOutput.setText("Algorithm result")
 
 
     def _setObjectsNames(self):
