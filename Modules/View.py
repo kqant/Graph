@@ -42,8 +42,8 @@ class GraphUI(QMainWindow):
         buttons = {
             "Input File": (0, 5, 105, 30),
             "⭯": (0, 70, 30, 30),
-            "Coloring": (45, 5, 140, 55),
-            "Min Path": (150, 5, 140, 55),
+            "Coloring": (45, 5, 140, 45),
+            "Min Path": (80, 5, 140, 45),
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
@@ -93,8 +93,8 @@ class GraphUI(QMainWindow):
 
     def setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
-        self.graphwidget.setGeometry(140, 15, 760, 590)
-        self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 100))
+        self.graphwidget.setGeometry(140, 0, 760, 590)
+        self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 200))
         self.TextMinPathStart.setGeometry(QRect(15, 370, 50, 30))
         self.TextMinPathGoal.setGeometry(QRect(85, 370, 50, 30))
         self.AlgoOutput.setGeometry(35, 410, 80, 30)
