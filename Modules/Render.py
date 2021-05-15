@@ -25,7 +25,7 @@ def drawDefault(adj, isDir, weighted):
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
-    nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
+    nx.draw_networkx_edges(G, pos=pos, width=0.1, edge_color='#750000')
 
 
 def drawMinPath(adj, isDir, weighted, path):
@@ -56,7 +56,7 @@ def drawMinPath(adj, isDir, weighted, path):
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
-    nx.draw_networkx_edges(G, pos=pos, width=1, edge_color=nx.get_edge_attributes(G,'color').values())
+    nx.draw_networkx_edges(G, pos=pos, width=1.0, edge_color=nx.get_edge_attributes(G,'color').values())
 
 
 def drawColoring(adj, isDir, weighted, colors):
@@ -88,5 +88,5 @@ def drawColoring(adj, isDir, weighted, colors):
     nx.draw(G, pos=pos, with_labels=True, node_color=converter(colors), font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
-    nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
+    nx.draw_networkx_edges(G, pos=pos, width=0.1, edge_color='#750000')
 
