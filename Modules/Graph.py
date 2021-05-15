@@ -1,28 +1,7 @@
-from os import path, getcwd
+
 from random import randint
-from PyQt5.QtWidgets import QMessageBox
 from collections import deque
-import json
-
-
-
-class MyDecoder(json.JSONDecoder):
-    def decode(self, z):
-        result = super().decode(z)
-        return self._decode(result)
-
-    def _decode(self, z):
-        if isinstance(z, str):
-            try:
-                return int(z)
-            except ValueError:
-                return z
-        elif isinstance(z, dict):
-            return {self._decode(k): self._decode(v) for k, v in z.items()}
-        elif isinstance(z, list):
-            return [self._decode(v) for v in z]
-        else:
-            return z
+from os.path import splitext
 
 
 class Graph:
@@ -30,36 +9,27 @@ class Graph:
     directed: bool
     weighted: bool
     filePath: str
-    inputType: str
-    algoValues: dict
-
+    funcRead: dict
 
     def __init__(self):
         self.adj = {}
         self.directed = False
         self.weighted = False
         self.filePath = None
-        self.inputType ="Adjacency List"
-        self.algoValues = {}
-
-    def getFields(self):
-        return self.adj, self.directed, self.weighted, self.algoValues
-
-
-    def print(self):
-        for key, value in self.adj.items():
-            print(f"[{key}] -> ", end="")
-            print(f"{value}")
+        self.funcRead = {
+                        ".list" : self._readList,
+                        ".mat" : self._readMatrix,
+                    }
 
 
-    def addVertices(self, *verts):
+    def _addVertices(self, *verts):
         for v in verts:
             if v not in self.adj.keys():
                 self.adj[v] = {}
 
 
-    def addEdges(self, start, ends):
-        self.addVertices(*range(1, max(start, *ends)+1))
+    def _addEdges(self, start, ends):
+        self._addVertices(*range(1, max(start, *ends)+1))
         self.adj[start] = {**self.adj[start], **ends}
         if not self.directed:
             for end in ends.keys():
@@ -69,7 +39,7 @@ class Graph:
                     self.adj[end] = {start: ends[end]}
 
 
-    def convert_matrix_to_list(self, matrix):
+    def _matrixToList(self, matrix):
         G = {}
         for a in range(len(matrix)):
             if matrix[a].count(0) != len(matrix):
@@ -84,82 +54,84 @@ class Graph:
         return G
 
 
+    def _readList(self):
+        with open(self.filePath, "r") as fin:
+            self.directed, self.weighted = map(bool, map(int, fin.readline().split()))
+            while True:
+                temp = [int(i) for i in fin.readline().split()]
+                if temp == []:
+                    break
+                if self.weighted:
+                    for i in range(0, len(temp), 3):
+                        if temp[i] <= 0 or temp[i+1] <= 0:
+                            self._adj = {}
+                            raise Exception("Uncorrect vertice")
+                        elif temp[i+2] <= 0:
+                            self._adj = {}
+                            raise Exception("Uncorrect weights")
+                        self._addEdges(temp[i], {temp[i+1]:temp[i+2]})
+                else:
+                    for i in range(0, len(temp), 2):
+                        if temp[i] <= 0 or temp[i+1] <= 0:
+                            print("Uncorrect vertice")
+                            self._adj = {}
+                            return "Uncorrect vertice"
+                        self._addEdges(temp[i], {temp[i+1]:1})
+            self._addVertices(max(self.adj.keys()))
+
+
+    def _readMatrix(self):
+        with open(self.filePath, "r") as fin:
+            self.directed, self.weighted = map(bool, map(int, fin.readline().split()))
+            matrix = []
+            while True:
+                if self.weighted:
+                    temp = [int(i) for i in fin.readline().split()]
+                else:
+                    temp = [1 if int(i) else 0 for i in fin.readline().split()]
+                if temp == []:
+                    break
+                matrix.append(temp)
+            self.adj = self._matrixToList(matrix)
+
+
+    def getFields(self):
+        return self.adj, self.directed, self.weighted
+
+
+    def initGraphFile(self, filepath):
+        self.filePath = filepath
+
+
     def readGraph(self):
+        self.adj = {}
         try:
-            with open(self.filePath, "r") as fin:
-                if self.inputType == "Adjacency List":
-                    self.adj = {}
-                    while True:
-                        temp = [int(i) for i in fin.readline().split()]
-                        if temp == []:
-                            break
-                        if self.weighted:
-                            for i in range(0, len(temp), 3):
-                                if temp[i] <= 0 or temp[i+1] <= 0:
-                                    print("Uncorrect vertice")
-                                    self._adj = {}
-                                    return "Uncorrect vertice"
-                                elif temp[i+2] <= 0:
-                                    print("Uncorrect weights")
-                                    self._adj = {}
-                                    return "Uncorrect weights"
-                                self.addEdges(temp[i], {temp[i+1]:temp[i+2]})
-                        else:
-                            for i in range(0, len(temp), 2):
-                                if temp[i] <= 0 or temp[i+1] <= 0:
-                                    print("Uncorrect vertice")
-                                    self._adj = {}
-                                    return "Uncorrect vertice"
-                                self.addEdges(temp[i], {temp[i+1]:1})
-                    self.addVertices(max(self.adj.keys()))
-                elif self.inputType == "Adjacency Matrix":
-                    matrix = []
-                    while True:
-                        if self.weighted:
-                            temp = [int(i) for i in fin.readline().split()]
-                        else:
-                            temp = [1 if int(i) else 0 for i in fin.readline().split()]
-                        if temp == []:
-                            break
-                        matrix.append(temp)
-                    self.adj = self.convert_matrix_to_list(matrix)
+            file_ext = splitext(self.filePath)[1]
+        except TypeError:
+            raise Exception("Choose file first!")
+
+        try:
+            self.funcRead[file_ext]()
+        except KeyError:
+            raise Exception(f"Incorrect file type: {file_ext}")
         except (FileNotFoundError, TypeError):
-            self.adj = {}
-            print("Path error")
-            return "Path error"
+            raise Exception("Path Error")
         except (IndexError, ValueError):
-            self.adj = {}
-            print("File not match input type")
-            return "File not match input type"
-
-
-    def importGraph(self, path):
-        try:
-            with open(path, "r") as file:
-                aFile = json.load(file, cls=MyDecoder)
-                self.adj = aFile['adj']
-                self.directed = aFile['directed']
-                self.weighted = aFile['weighted']
-                self.algoValues = aFile['algoValues']
-        except Exception:
-            return "File corrupted"
-
-
-    def exportGraph(self, path):
-        with open(path, "w") as file:
-            toSaveDict = {}
-            toSaveDict["adj"] = self.adj
-            toSaveDict["directed"] = self.directed
-            toSaveDict["weighted"] = self.weighted
-            toSaveDict["algoValues"] = self.algoValues
-            json.dump(toSaveDict, fp=file, sort_keys=True, indent=4)
+            raise Exception("File not match input type")
 
 
     def minPathFind(self, start, goal):
+        if not self.adj:
+            raise Exception("Graph is empty")
         graph = self.adj
+
+        try:
+            start, goal = int(start), int(goal)
+        except Exception:
+            raise Exception("Unknown vertices")
         if start not in graph or goal not in graph:
-            print("Vertices not in graph")
-            return "Vertices not in graph"
+            raise Exception("Vertices not in graph")
+
         queue = deque()
         visited = {start: 0}
         tmpPath = {}
@@ -182,11 +154,12 @@ class Graph:
         elif start == goal:
             return 0, [start]
         else:
-            print("Minimal path error")
-            return "Minimal path error"
+            raise Exception("Path not found")
 
 
     def coloring(self):
+        if not self.adj:
+            raise Exception("Graph is empty")
         graph = self.adj
         tmp = {x: 0 for x in graph}
         for x in graph:
@@ -227,7 +200,3 @@ class Graph:
                 res[i] = existColors[colored[i]]
         return cl, res
 
-
-    def initGraphFile(self, filepath):
-        self.filePath = filepath
-        
