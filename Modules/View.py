@@ -1,11 +1,11 @@
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
+from Modules.Authors import authors
 
 from os import path, getcwd
 
@@ -134,3 +134,13 @@ class GraphUI(QMainWindow):
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
 
+
+    def aboutAuthors(self):
+        mb = QMessageBox()
+        mb.setIcon(QMessageBox.Information)
+
+        mb.setWindowTitle("Authors")
+        mb.setText(authors)
+
+        mb.setStandardButtons(QMessageBox.Ok)
+        mb.exec()
