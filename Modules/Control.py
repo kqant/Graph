@@ -12,8 +12,10 @@ class GraphCtrl:
     def _connectButtons(self):
         self.view.buttons["Input File"].clicked.connect(partial(self._chooseInputFile))
         self.view.buttons["⭯"].clicked.connect(partial(self._updateGraph))
+        self.view.buttons["Clear"].clicked.connect(partial(self._clearGraph))
         self.view.buttons["Coloring"].clicked.connect(partial(self._coloringGraph))
         self.view.buttons["Min Path"].clicked.connect(partial(self._minPathGraph))
+        self.view.buttons["About"].clicked.connect(partial(self._aboutAuthors))
 
 
     def _chooseInputFile(self):
@@ -40,6 +42,7 @@ class GraphCtrl:
 
     def _clearGraph(self):
         self.view.figure.clf()
+        self.view.canvas.draw()
 
 
     def _coloringGraph(self):

@@ -45,8 +45,10 @@ class GraphUI(QMainWindow):
         buttons = {
             "Input File": (0, 5, 105, 30),
             "⭯": (0, 70, 30, 30),
+            "Clear": (30, 5, 140, 45),
             "Coloring": (45, 5, 140, 45),
             "Min Path": (50, 5, 140, 45),
+            "About": (100, 5, 140, 45),
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
