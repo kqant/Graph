@@ -46,7 +46,7 @@ class GraphUI(QMainWindow):
             "Input File": (0, 5, 105, 30),
             "⭯": (0, 70, 30, 30),
             "Coloring": (45, 5, 140, 45),
-            "Min Path": (80, 5, 140, 45),
+            "Min Path": (50, 5, 140, 45),
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
@@ -55,9 +55,11 @@ class GraphUI(QMainWindow):
             font = QFont()
             if btnText == "⭯":
                 font.setPointSize(18)
+                self.buttons[btnText].setDisabled(True)
             else:
                 font.setPointSize(12)
             self.buttons[btnText].setFont(font)
+
             buttonsLayout.addWidget(self.buttons[btnText], prop[0], prop[1])
         self.buttonsLayout.addLayout(buttonsLayout)
 
@@ -90,7 +92,7 @@ class GraphUI(QMainWindow):
         self.AlgoOutput.setFont(font)
         self.AlgoOutput.setReadOnly(True)
         self.AlgoOutput.setAlignment(Qt.AlignHCenter)
-        self.AlgoOutput.setText("Algorithm result")
+        self.AlgoOutput.setText("Algorithm result.")
 
 
     def _setObjectsNames(self):
@@ -106,11 +108,11 @@ class GraphUI(QMainWindow):
 
     def _setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
-        self.graphwidget.setGeometry(140, 0, 760, 590)
+        self.graphwidget.setGeometry(140, 0, 760, 600)
         self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 200))
         self.TextMinPathStart.setGeometry(QRect(5, 190, 68, 30))
         self.TextMinPathGoal.setGeometry(QRect(76, 190, 68, 30))
-        self.AlgoOutput.setGeometry(5, 550, 140, 30)
+        self.AlgoOutput.setGeometry(5, 562, 140, 30)
 
 
     def getPathFile(self):
