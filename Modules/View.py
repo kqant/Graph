@@ -1,4 +1,5 @@
 
+from PyQt5 import QtCore
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -76,15 +77,20 @@ class GraphUI(QMainWindow):
         font.setPointSize(11)
         self.TextMinPathStart.setFont(font)
         self.TextMinPathGoal.setFont(font)
+        self.TextMinPathStart.setAlignment(Qt.AlignHCenter)
+        self.TextMinPathGoal.setAlignment(Qt.AlignHCenter)
         self.TextMinPathStart.setPlaceholderText("Start")
         self.TextMinPathGoal.setPlaceholderText("Goal")
 
 
     def _createAlgoOutput(self):
+        self.AlgoOutput = QLineEdit(self.centralwidget)
         font = QFont()
         font.setPointSize(11)
-        self.AlgoOutput = QLineEdit(self.centralwidget)
-        self.AlgoOutput.setText(f"Output:")
+        self.AlgoOutput.setFont(font)
+        self.AlgoOutput.setReadOnly(True)
+        self.AlgoOutput.setAlignment(Qt.AlignHCenter)
+        self.AlgoOutput.setText("Algorithm result")
 
 
     def _setObjectsNames(self):
@@ -102,29 +108,17 @@ class GraphUI(QMainWindow):
         self.centralwidget.setGeometry(0, 0, 900, 600)
         self.graphwidget.setGeometry(140, 0, 760, 590)
         self.horizontalLayoutWidget.setGeometry(QRect(5, 0, 140, 200))
-        self.TextMinPathStart.setGeometry(QRect(15, 370, 50, 30))
-        self.TextMinPathGoal.setGeometry(QRect(85, 370, 50, 30))
-        self.AlgoOutput.setGeometry(35, 410, 80, 30)
+        self.TextMinPathStart.setGeometry(QRect(5, 190, 68, 30))
+        self.TextMinPathGoal.setGeometry(QRect(76, 190, 68, 30))
+        self.AlgoOutput.setGeometry(5, 550, 140, 30)
 
 
     def getPathFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", path.join(getcwd(), "input.txt"), options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", getcwd(), "Graph files (*.list *.mat)", options=options)
         if fileName:
             return fileName
-
-
-    def showResult(self, type, result):
-        msg = QMessageBox()
-        if type == "Min Path Finding":
-            msg.setWindowTitle("Min path result")
-            msg.setText(f"Min path is {result}")
-        elif type == "Coloring":
-            msg.setWindowTitle("Coloring result")
-            msg.setText(f"Colors number is {result}")
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec()
 
 
     def showError(self, error):

@@ -40,7 +40,7 @@ class GraphCtrl:
     def _coloringGraph(self):
         q, colors = self.model.graph.coloring()
 
-        self.view.AlgoOutput.setText(str(q))
+        self.view.AlgoOutput.setText("Colors: " + str(q))
 
         adj, dir, w = self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
 
@@ -58,7 +58,7 @@ class GraphCtrl:
             self.view.showError(ex)
             return
 
-        self.view.AlgoOutput.setText(str(lenght))
+        self.view.AlgoOutput.setText("Min path: " + str(lenght))
 
         adj, dir, w = self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
 
