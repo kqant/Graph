@@ -1,1 +1,4 @@
-py core.py
+
+@echo off
+python Core.py
+
