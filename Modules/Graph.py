@@ -15,7 +15,7 @@ class Graph:
         self.adj = {}
         self.directed = False
         self.weighted = False
-        self.filePath = None
+        self.filePath = ""
         self.funcRead = {
             ".list": (".list", False, False,),
             ".mat": (".mat", False, False),
@@ -99,6 +99,13 @@ class Graph:
                     break
                 matrix.append(temp)
             self.adj = self._matrixToList(matrix)
+
+
+    def clearGraph(self):
+        self.adj = {}
+        self.directed = False
+        self.weighted = False
+        self.filePath = ""
 
 
     def getFields(self):

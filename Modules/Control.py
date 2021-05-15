@@ -23,6 +23,7 @@ class GraphCtrl:
         if filepath:
             self.model.graph.initGraphFile(filepath)
             self.view.buttons["⭯"].setEnabled(True)
+            self.view.statusBar().showMessage(filepath)
             self._updateGraph()
 
 
@@ -41,8 +42,11 @@ class GraphCtrl:
 
 
     def _clearGraph(self):
+        self.model.graph.clearGraph()
         self.view.figure.clf()
         self.view.canvas.draw()
+        self.view.statusBar().showMessage("Choose input file")
+        self.view.buttons["⭯"].setEnabled(False)
 
 
     def _coloringGraph(self):

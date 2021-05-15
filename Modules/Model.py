@@ -8,7 +8,7 @@ class GraphModel():
         self.graph = Graph()
         self.functions = {
             drawDefault.__name__: drawDefault,
-            drawMinPath.__name__: drawMinPath,
-            drawColoring.__name__: drawColoring
+            drawColoring.__name__: drawColoring,
+            drawMinPath.__name__: drawMinPath
         }
 

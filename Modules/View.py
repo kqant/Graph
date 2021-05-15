@@ -16,7 +16,7 @@ class GraphUI(QMainWindow):
     def __init__(self, parent = None):
         super(GraphUI, self).__init__(parent)
         self.setWindowTitle("GraphDrawer")
-        self.setFixedSize(900, 600)
+        self.setFixedSize(900, 615)
         self.setWindowIcon(QIcon(iconPath))
         self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
         self.centralwidget = QWidget(self)
@@ -33,6 +33,8 @@ class GraphUI(QMainWindow):
         self._createMinPathInput()
         self._createAlgoOutput()
 
+        self.statusBar().showMessage("Choose input file")
+
         QMetaObject.connectSlotsByName(self)
 
         self._setObjectsNames()
@@ -48,7 +50,7 @@ class GraphUI(QMainWindow):
             "Clear": (30, 5, 140, 45),
             "Coloring": (45, 5, 140, 45),
             "Min Path": (50, 5, 140, 45),
-            "About": (100, 5, 140, 45),
+            "About": (100, 5, 140, 45)
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
