@@ -2,7 +2,10 @@
 import networkx as nx
 
 
-def drawDefault(adj, isDir, weighted):
+
+def drawDefault(figure, canvas, adj, isDir, weighted):
+    figure.clf()
+    
     if (isDir):
         G = nx.DiGraph()
     else:
@@ -27,8 +30,11 @@ def drawDefault(adj, isDir, weighted):
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
 
+    canvas.draw()
 
-def drawMinPath(adj, isDir, weighted, path):
+
+def drawMinPath(figure, canvas, adj, isDir, weighted, path):
+    figure.clf()
     if (isDir):
         G = nx.DiGraph()
     else:
@@ -57,9 +63,12 @@ def drawMinPath(adj, isDir, weighted, path):
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color=nx.get_edge_attributes(G,'color').values())
+    
+    canvas.draw()
 
 
-def drawColoring(adj, isDir, weighted, colors):
+def drawColoring(figure, canvas, adj, isDir, weighted, colors):
+    figure.clf()
     if (isDir):
         G = nx.DiGraph()
     else:
@@ -89,4 +98,5 @@ def drawColoring(adj, isDir, weighted, colors):
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
     nx.draw_networkx_edges(G, pos=pos, width=1, edge_color='#750000')
-
+    
+    canvas.draw()
