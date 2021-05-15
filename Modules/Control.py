@@ -30,7 +30,7 @@ class GraphCtrl:
             self.view.showError(ex)
             return
 
-        adj, dir, w = self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
+        adj, dir, w = self.model.graph.getFields()
 
         self.view.figure.clf()
         self.model.functions["drawDefault"](adj, dir, w)
@@ -38,11 +38,15 @@ class GraphCtrl:
 
 
     def _coloringGraph(self):
-        q, colors = self.model.graph.coloring()
+        try:
+            q, colors = self.model.graph.coloring()
+        except Exception as ex:
+            self.view.AlgoOutput.setText(str(ex))
+            return
 
         self.view.AlgoOutput.setText("Colors: " + str(q))
 
-        adj, dir, w = self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
+        adj, dir, w = self.model.graph.getFields()
 
         self.view.figure.clf()
         self.model.functions["drawColoring"](adj, dir, w, colors)
@@ -53,14 +57,16 @@ class GraphCtrl:
         start, goal = self.view.TextMinPathStart.text(), self.view.TextMinPathGoal.text()
 
         try:
+            if not start or not goal:
+                raise Exception("Fields error")
             lenght, path = self.model.graph.minPathFind(start, goal)
         except Exception as ex:
-            self.view.showError(ex)
+            self.view.AlgoOutput.setText(str(ex))
             return
 
         self.view.AlgoOutput.setText("Min path: " + str(lenght))
 
-        adj, dir, w = self.model.graph.adj, self.model.graph.directed, self.model.graph.weighted
+        adj, dir, w = self.model.graph.getFields()
 
         self.view.figure.clf()
         self.model.functions["drawMinPath"](adj, dir, w, path)

@@ -95,6 +95,10 @@ class Graph:
             self.adj = self._matrixToList(matrix)
 
 
+    def getFields(self):
+        return self.adj, self.directed, self.weighted
+
+
     def initGraphFile(self, filepath):
         self.filePath = filepath
 
@@ -117,10 +121,17 @@ class Graph:
 
 
     def minPathFind(self, start, goal):
+        if not self.adj:
+            raise Exception("Graph is empty")
         graph = self.adj
-        start, goal = int(start), int(goal)
+
+        try:
+            start, goal = int(start), int(goal)
+        except Exception:
+            raise Exception("Unknown vertices")
         if start not in graph or goal not in graph:
             raise Exception("Vertices not in graph")
+
         queue = deque()
         visited = {start: 0}
         tmpPath = {}
@@ -143,10 +154,12 @@ class Graph:
         elif start == goal:
             return 0, [start]
         else:
-            raise Exception("Minimal path error")
+            raise Exception("Path not found")
 
 
     def coloring(self):
+        if not self.adj:
+            raise Exception("Graph is empty")
         graph = self.adj
         tmp = {x: 0 for x in graph}
         for x in graph:
