@@ -15,7 +15,7 @@ def main():
 
 	model = GraphModel()
 
-	GraphCtrl(model, view)
+	GraphCtrl(view, model)
 
 	view.show()
 	sys.exit(app.exec())
