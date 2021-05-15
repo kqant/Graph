@@ -140,6 +140,8 @@ class Graph:
 
 
     def minPathFind(self, start, goal):
+        if not self.weighted:
+            raise Exception("Graph not weighted")
         if not self.adj:
             raise Exception("Graph is empty")
         graph = self.adj
