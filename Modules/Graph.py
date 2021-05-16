@@ -20,7 +20,7 @@ class Graph:
             ".list": (".list", False, False,),
             ".mat": (".mat", False, False),
             ".listw": (".list", True, False),
-            ".listd": (".list", True, False),
+            ".listd": (".list", False, True),
             ".listwd": ('.list', True, True),
             ".listdw": ('.list', True, True),
             ".matw": (".mat", True, False),
