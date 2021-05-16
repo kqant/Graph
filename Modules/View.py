@@ -2,6 +2,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5 import QtWidgets
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
@@ -29,6 +30,7 @@ class GraphUI(QMainWindow):
         self.generalLayout = QVBoxLayout(self.graphwidget)
 
         self._createButtons()
+        self._createAboutButton()
         self._createCanvas()
         self._createMinPathInput()
         self._createAlgoOutput()
@@ -47,10 +49,9 @@ class GraphUI(QMainWindow):
         buttons = {
             "Input File": (0, 5, 105, 30),
             "⭯": (0, 70, 30, 30),
-            "Clear": (30, 5, 140, 45),
+            "Clear": (30, 5, 140, 30),
             "Coloring": (45, 5, 140, 45),
-            "Min Path": (50, 5, 140, 45),
-            "About": (100, 5, 140, 45)
+            "Min Path": (50, 5, 140, 45)
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
@@ -63,10 +64,15 @@ class GraphUI(QMainWindow):
             else:
                 font.setPointSize(12)
             self.buttons[btnText].setFont(font)
-
             buttonsLayout.addWidget(self.buttons[btnText], prop[0], prop[1])
         self.buttonsLayout.addLayout(buttonsLayout)
 
+    def _createAboutButton(self):
+        self.aboutButton = QtWidgets.QPushButton(self.centralwidget)
+        font = QFont()
+        font.setPointSize(12)
+        self.aboutButton.setFont(font)
+        self.aboutButton.setText("About")
 
     def _createCanvas(self):
         self.figure = plt.figure()
@@ -112,11 +118,12 @@ class GraphUI(QMainWindow):
 
     def _setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
-        self.graphwidget.setGeometry(140, 0, 760, 600)
-        self.horizontalLayoutWidget.setGeometry(QRect(5, 10, 140, 138))
-        self.TextMinPathStart.setGeometry(QRect(5, 150, 68, 30))
-        self.TextMinPathGoal.setGeometry(QRect(76, 150, 68, 30))
-        self.AlgoOutput.setGeometry(5, 562, 140, 30)
+        self.graphwidget.setGeometry(140, 0, 760, 610)
+        self.horizontalLayoutWidget.setGeometry(QRect(5, 10, 140, 170))
+        self.TextMinPathStart.setGeometry(QRect(5, 180, 68, 30))
+        self.TextMinPathGoal.setGeometry(QRect(76, 180, 68, 30))
+        self.AlgoOutput.setGeometry(5, 565, 140, 30)
+        self.aboutButton.setGeometry(35, 230, 80, 30)
 
 
     def getPathFile(self):
