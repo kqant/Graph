@@ -12,8 +12,10 @@ class GraphCtrl:
     def _connectButtons(self):
         self.view.buttons["Input File"].clicked.connect(partial(self._chooseInputFile))
         self.view.buttons["⭯"].clicked.connect(partial(self._updateGraph))
+        self.view.buttons["Clear"].clicked.connect(partial(self._clearGraph))
         self.view.buttons["Coloring"].clicked.connect(partial(self._coloringGraph))
         self.view.buttons["Min Path"].clicked.connect(partial(self._minPathGraph))
+        self.view.buttons["About"].clicked.connect(partial(self._aboutAuthors))
 
 
     def _chooseInputFile(self):
@@ -21,6 +23,7 @@ class GraphCtrl:
         if filepath:
             self.model.graph.initGraphFile(filepath)
             self.view.buttons["⭯"].setEnabled(True)
+            self.view.statusBar().showMessage(filepath)
             self._updateGraph()
 
 
@@ -36,6 +39,14 @@ class GraphCtrl:
         self.view.figure.clf()
         self.model.functions["drawDefault"](adj, dir, w)
         self.view.canvas.draw()
+
+
+    def _clearGraph(self):
+        self.model.graph.clearGraph()
+        self.view.figure.clf()
+        self.view.canvas.draw()
+        self.view.statusBar().showMessage("Choose input file")
+        self.view.buttons["⭯"].setEnabled(False)
 
 
     def _coloringGraph(self):
@@ -72,4 +83,8 @@ class GraphCtrl:
         self.view.figure.clf()
         self.model.functions["drawMinPath"](adj, dir, w, path)
         self.view.canvas.draw()
+
+
+    def _aboutAuthors(self):
+        self.view.aboutAuthors()
 

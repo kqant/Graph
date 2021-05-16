@@ -15,7 +15,7 @@ class Graph:
         self.adj = {}
         self.directed = False
         self.weighted = False
-        self.filePath = None
+        self.filePath = ""
         self.funcRead = {
             ".list": (".list", False, False,),
             ".mat": (".mat", False, False),
@@ -101,6 +101,13 @@ class Graph:
             self.adj = self._matrixToList(matrix)
 
 
+    def clearGraph(self):
+        self.adj = {}
+        self.directed = False
+        self.weighted = False
+        self.filePath = ""
+
+
     def getFields(self):
         return self.adj, self.directed, self.weighted
 
@@ -133,6 +140,8 @@ class Graph:
 
 
     def minPathFind(self, start, goal):
+        if not self.weighted:
+            raise Exception("Graph not weighted")
         if not self.adj:
             raise Exception("Graph is empty")
         graph = self.adj

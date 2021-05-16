@@ -1,11 +1,11 @@
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
+from Modules.Authors import authors
 
 from os import path, getcwd
 
@@ -16,7 +16,7 @@ class GraphUI(QMainWindow):
     def __init__(self, parent = None):
         super(GraphUI, self).__init__(parent)
         self.setWindowTitle("GraphDrawer")
-        self.setFixedSize(900, 600)
+        self.setFixedSize(900, 615)
         self.setWindowIcon(QIcon(iconPath))
         self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
         self.centralwidget = QWidget(self)
@@ -33,6 +33,8 @@ class GraphUI(QMainWindow):
         self._createMinPathInput()
         self._createAlgoOutput()
 
+        self.statusBar().showMessage("Choose input file")
+
         QMetaObject.connectSlotsByName(self)
 
         self._setObjectsNames()
@@ -45,8 +47,10 @@ class GraphUI(QMainWindow):
         buttons = {
             "Input File": (0, 5, 105, 30),
             "⭯": (0, 70, 30, 30),
+            "Clear": (30, 5, 140, 45),
             "Coloring": (45, 5, 140, 45),
             "Min Path": (50, 5, 140, 45),
+            "About": (100, 5, 140, 45)
         }
         buttonsLayout = QGridLayout()
         for btnText, prop in buttons.items():
@@ -118,7 +122,8 @@ class GraphUI(QMainWindow):
     def getPathFile(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", getcwd(), "Graph files (*.list *.mat *.listw *.listwd *.listd *.matw *.matd *.matwd)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self, "Graph Application", getcwd(),
+                                                  "Graph files (*.list *.mat *.listw *.listwd *.listd *.matw *.matd *.matwd)", options=options)
         if fileName:
             return fileName
 
@@ -133,3 +138,13 @@ class GraphUI(QMainWindow):
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
 
+
+    def aboutAuthors(self):
+        mb = QMessageBox()
+        mb.setIcon(QMessageBox.Information)
+
+        mb.setWindowTitle("Authors")
+        mb.setText(authors)
+
+        mb.setStandardButtons(QMessageBox.Ok)
+        mb.exec()
