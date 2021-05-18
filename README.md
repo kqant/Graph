@@ -11,5 +11,4 @@
 To install required modules write  
 `pip install -r requirements.txt`
 
-To launch programm write  
-`python Core.py`
+To launch programm open `start.bat` file
