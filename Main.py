@@ -1,5 +1,5 @@
 
-import sys
+from sys import argv, exit
 
 from PyQt5.QtWidgets import QApplication
 
@@ -8,8 +8,9 @@ from Modules.Model import GraphModel
 from Modules.Control import GraphCtrl
 
 
+
 def main():
-	app = QApplication(sys.argv)
+	app = QApplication(argv)
 
 	view = GraphUI()
 
@@ -18,7 +19,7 @@ def main():
 	GraphCtrl(view, model)
 
 	view.show()
-	sys.exit(app.exec())
+	exit(app.exec())
 
 if __name__ == "__main__":
 	main()
