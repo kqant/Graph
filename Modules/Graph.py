@@ -4,6 +4,7 @@ from collections import deque
 from os.path import splitext
 
 
+
 class Graph:
     adj: dict
     directed: bool
@@ -140,10 +141,11 @@ class Graph:
 
 
     def minPathFind(self, start, goal):
-        if not self.weighted:
-            raise Exception("Graph not weighted")
         if not self.adj:
             raise Exception("Graph is empty")
+        if not self.weighted:
+            raise Exception("Graph not weighted")
+
         graph = self.adj
 
         try:

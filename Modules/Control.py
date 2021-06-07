@@ -2,6 +2,7 @@
 from functools import partial
 
 
+
 class GraphCtrl:
     def __init__(self, view, model):
         self.view = view

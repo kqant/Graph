@@ -2,8 +2,9 @@
 import networkx as nx
 
 
+
 def drawDefault(adj, isDir, weighted):
-    if (isDir):
+    if isDir:
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -11,7 +12,7 @@ def drawDefault(adj, isDir, weighted):
     for i in adj:
         G.add_node(i)
 
-    if (weighted):
+    if weighted:
         for i in adj:
             for j in adj[i]:
                 G.add_edge(i, j, weight=adj[i][j])
@@ -29,7 +30,7 @@ def drawDefault(adj, isDir, weighted):
 
 
 def drawMinPath(adj, isDir, weighted, path):
-    if (isDir):
+    if isDir:
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -39,7 +40,7 @@ def drawMinPath(adj, isDir, weighted, path):
     
     for i in adj:
         for j in adj[i]:
-            if (weighted):
+            if weighted:
                 G.add_edge(i, j, weight=adj[i][j], color='#750000')
             else:
                 G.add_edge(i, j, color='#750000')
@@ -60,7 +61,7 @@ def drawMinPath(adj, isDir, weighted, path):
 
 
 def drawColoring(adj, isDir, weighted, colors):
-    if (isDir):
+    if isDir:
         G = nx.DiGraph()
     else:
         G = nx.Graph()
@@ -74,7 +75,7 @@ def drawColoring(adj, isDir, weighted, colors):
     for i in adj:
         G.add_node(i)
     
-    if (weighted):
+    if weighted:
         for i in adj:
             for j in adj[i]:
                 G.add_edge(i, j, weight=adj[i][j])

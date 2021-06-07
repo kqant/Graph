@@ -1,4 +1,4 @@
 
 @echo off
-python Core.py
+python Main.py
 

@@ -3,14 +3,16 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
+
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
+
 from Modules.Authors import authors
 
 from os import path, getcwd
-
 iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
+
 
 
 class GraphUI(QMainWindow):
@@ -67,12 +69,14 @@ class GraphUI(QMainWindow):
             buttonsLayout.addWidget(self.buttons[btnText], prop[0], prop[1])
         self.buttonsLayout.addLayout(buttonsLayout)
 
+
     def _createAboutButton(self):
         self.aboutButton = QtWidgets.QPushButton(self.centralwidget)
         font = QFont()
         font.setPointSize(12)
         self.aboutButton.setFont(font)
         self.aboutButton.setText("About")
+
 
     def _createCanvas(self):
         self.figure = plt.figure()
@@ -155,3 +159,4 @@ class GraphUI(QMainWindow):
 
         mb.setStandardButtons(QMessageBox.Ok)
         mb.exec()
+

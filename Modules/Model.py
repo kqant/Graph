@@ -3,6 +3,7 @@ from .Graph import Graph
 from .Render import drawColoring, drawMinPath, drawDefault
 
 
+
 class GraphModel():
     def __init__(self):
         self.graph = Graph()
