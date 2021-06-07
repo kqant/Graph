@@ -1,8 +1,75 @@
 
+"""
+Описание:
+        Модуль для работы с графами
+Классы:
+        Graph                               класс графов
+            Поля:
+                adj: dict                   список смежности
+                directed: bool              ориентированность графа
+                weighted: bool              взвешенность графа
+                filePath: str               абсолютный путь до файла с данными графа
+                fileTypes: dict             словарь типов файлов структуры:
+                                            fileExt: (fileExt, weighted, directed) где
+                                            fileExt - тип файла 'str';
+                                            weighted - взвешенность 'bool';
+                                            directed - ориентированность 'bool';
+
+            Методы:
+                __init__                    инициализация класса
+
+                _addVertices                добавление вершин в adj
+                    Параметры:
+                        [in] *verts: dict   вершины
+
+                _addEdges                   добавление рёбер в adj
+                    Параметры:
+                        [in] start: dict    начальная вершина
+                        [in] end: dict      конечная вершина
+
+                _matrixToList               преобразование матрицы в список смежности
+                    Параметры:
+                        [in] matrix: dict   матрица смежности
+                    Возвращаемое значение:
+                        [out] G: dict       список смежности
+
+                _readList                   чтение списка смежности из filePath и заполнение adj
+
+                _readMatrix                 чтение матрицы смежности из filePath и заполнение adj
+
+                clearGraph                  очистка полей класса: adj, directed, weighted, filePath
+
+                getFields                   получение полей класса: adj, directed, weighted
+                    Возвращаемое значение:
+                        [out] adj
+                        [out] directed
+                        [out] weighted
+
+                initGraphFile               инициализация файлового пути поля filePath
+                    Параметры:
+                        [in] filepath
+
+                readGraph                   чтение и инициализация графа
+
+                minPathFind                 поиск кратчайшего пути в графе
+                    Параметры:
+                        [in] start: int     начальная вершина
+                        [in] goal: int      вершина назначения
+                    Возвращаемое значение:
+                        [out] visited: int  была ли посещена вершина goal
+                        [out] path: list    путь до вершины goal
+
+                coloring                    раскраска графа
+                    Возвращаемое значение:
+                        [out] cl: int       кол-во цветов
+                        [out] res: dict     список цветов
+"""
+
+
+
 from random import randint
 from collections import deque
 from os.path import splitext
-
 
 
 class Graph:
@@ -10,14 +77,14 @@ class Graph:
     directed: bool
     weighted: bool
     filePath: str
-    funcRead: dict
+    fileTypes: dict
 
     def __init__(self):
         self.adj = {}
         self.directed = False
         self.weighted = False
         self.filePath = ""
-        self.funcRead = {
+        self.fileTypes = {
             ".list": (".list", False, False,),
             ".mat": (".mat", False, False),
             ".listw": (".list", True, False),
@@ -125,7 +192,7 @@ class Graph:
             raise Exception("Choose file first!")
 
         try:
-            ex,w,d = self.funcRead[file_ext]
+            ex,w,d = self.fileTypes[file_ext]
             self.weighted = w
             self.directed = d
             if ex == '.list':

@@ -1,6 +1,38 @@
 
-from functools import partial
+"""
+Описание:
+        Модуль контроллера (Controller) интерпретирует действия пользователя
+        из представления (View), оповещая модель (Model) о необходимости изменений
+Классы:
+        GraphCtrl                   класс контроллера (Controller)
+            Поля:
+                view: GraphUI       экземпляр класса 'GraphUI' (View)
+                model: GraphModel   экземпляр класса 'GraphModel' (Model)
 
+            Методы:
+                __init__            инициализация класса
+                    Параметры:
+                        [in] view
+                        [in] model
+
+                _connectButtons     подключение кнопок графического интерфейса
+
+                _chooseInputFile    выбор входного файла из view и передача пути в model
+
+                _updateGraph        инициализация графа из файла (model) и отображение в UI (view)
+
+                _clearGraph         очистка графа во view и model
+
+                _coloringGraph      нахождение цветов графа (model) и их графическое представление (view)
+
+                _minPathGraph       нахождение кратчайшего пути графа (model) и его графическое представление (view)
+
+                _aboutAuthors       вызов окошка с информацией об авторах (view)
+"""
+
+
+
+from functools import partial
 
 
 class GraphCtrl:

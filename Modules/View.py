@@ -1,8 +1,61 @@
 
+"""
+Описание:
+        Модуль представления (View) отвечает за отображение данных
+        модели (Model) пользователя, реагируя на изменение модели (Model)
+        с помощью фреймворка PytQt5
+Переменные:
+        iconPath: str                           абсолютный путь до иконки программы
+Классы:
+        GraphUI                                 класс представления (View) унаследованный от QMainWindow
+            Поля:
+                centralwidget: QWidget          центральный виджет
+                horizontalLayoutWidget: QWidget виджет горизонтального слоя
+                buttonsLayout: QHBoxLayout      горизонтальный слой кнопок
+                graphwidget: QWidget            виджет графа
+                generalLayout: QVBoxLayout      главный вертикальный виджет
+                buttons: dict                   список кнопок
+                aboutButton: QPushButton        виджет кнопки "About"
+                figure: plt                     фигура matplotlib
+                canvas: FigureCanvas            виджет холста
+                toolbar: NavigationToolbar      виджет тулбара
+                TextMinPathStart: QLineEdit     виджет поля "Start
+                TextMinPathGoal: QLineEdit      виджет поля "Goal"
+                AlgoOutput: QLineEdit           виджет поля результата алгоритма
+
+            Методы:
+                __init__                        инициализация класса
+
+                _createButtons                  создание кнопок
+
+                _createAboutButton              создание кнопки "About"
+
+                _createCanvas                   создание холста
+
+                _createMinPathInput             создание полей для ввода вершин
+
+                _createAlgoOutput               создание поля с выводом результата алгоритма
+
+                _setObjectsNames                установка имён объектов
+
+                _setGeometry                    установка геометрии объектов
+
+                getPathFile                     получение пути из диалогового окна выбора файла
+                    Возвращаемое значение:
+                        [out] fileName: str     абсолютный путь до файла
+
+                showError                       вывод сообщения об ошибке
+                    Параметры:
+                        [in] error: str         строка с ошибкой
+
+                aboutAuthors                    вывод сообщения об авторах из модуля Authors
+"""
+
+
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5 import QtWidgets
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
@@ -12,7 +65,6 @@ from Modules.Authors import authors
 
 from os import path, getcwd
 iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
-
 
 
 class GraphUI(QMainWindow):
@@ -71,7 +123,7 @@ class GraphUI(QMainWindow):
 
 
     def _createAboutButton(self):
-        self.aboutButton = QtWidgets.QPushButton(self.centralwidget)
+        self.aboutButton = QPushButton(self.centralwidget)
         font = QFont()
         font.setPointSize(12)
         self.aboutButton.setFont(font)
@@ -112,9 +164,9 @@ class GraphUI(QMainWindow):
     def _setObjectsNames(self):
         self.setObjectName("MainWindow")
         self.centralwidget.setObjectName("centralwidget")
-        self.graphwidget.setObjectName("graphwidget")
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.buttonsLayout.setObjectName("buttonsLayout")
+        self.graphwidget.setObjectName("graphwidget")
         self.TextMinPathStart.setObjectName("TextMinPathStart")
         self.TextMinPathGoal.setObjectName("TextMinPathStart")
         self.AlgoOutput.setObjectName("AlgoOutput")
@@ -122,12 +174,12 @@ class GraphUI(QMainWindow):
 
     def _setGeometry(self):
         self.centralwidget.setGeometry(0, 0, 900, 600)
-        self.graphwidget.setGeometry(140, 0, 760, 610)
         self.horizontalLayoutWidget.setGeometry(QRect(5, 10, 140, 170))
+        self.graphwidget.setGeometry(140, 0, 760, 610)
+        self.aboutButton.setGeometry(35, 230, 80, 30)
         self.TextMinPathStart.setGeometry(QRect(5, 180, 68, 30))
         self.TextMinPathGoal.setGeometry(QRect(76, 180, 68, 30))
         self.AlgoOutput.setGeometry(5, 565, 140, 30)
-        self.aboutButton.setGeometry(35, 230, 80, 30)
 
 
     def getPathFile(self):

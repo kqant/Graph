@@ -1,6 +1,32 @@
 
-import networkx as nx
+"""
+Описание:
+        Модуль отрисовки графа с помощью библиотеки networkx
+Функции:
+        drawDefault                 отрисовка графа по умолчанию
+            Параметры:
+                [in] adj: dict      список смежности
+                [in] isDir: bool    ориентированность
+                [in] weighted: bool взвешенность
 
+        drawMinPath                 отрисовка минимального пути
+            Параметры:
+                [in] adj: dict      список смежности
+                [in] isDir: bool    ориентированность
+                [in] weighted: bool взвешенность
+                [in] path: list     минимальный путь
+
+        drawColoring                отрисовка цветов вершин
+            Параметры:
+                [in] adj: dict      список смежности
+                [in] isDir: bool    ориентированность
+                [in] weighted: bool взвешенность
+                [in] colors: list   список цветов
+"""
+
+
+
+import networkx as nx
 
 
 def drawDefault(adj, isDir, weighted):
@@ -8,7 +34,7 @@ def drawDefault(adj, isDir, weighted):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
-        
+
     for i in adj:
         G.add_node(i)
 
@@ -34,10 +60,10 @@ def drawMinPath(adj, isDir, weighted, path):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
-        
+
     for i in adj:
         G.add_node(i)
-    
+
     for i in adj:
         for j in adj[i]:
             if weighted:
@@ -53,7 +79,7 @@ def drawMinPath(adj, isDir, weighted, path):
                     break
 
     pos = nx.kamada_kawai_layout(G)
-    
+
     nx.draw(G, pos=pos, with_labels=True, node_color='#003473', font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))
@@ -65,16 +91,16 @@ def drawColoring(adj, isDir, weighted, colors):
         G = nx.DiGraph()
     else:
         G = nx.Graph()
-        
+
     def converter(colors):
         col_converted = []
         for i in colors:
             col_converted.append((colors[i][0] / 255, colors[i][1] / 255, colors[i][2] / 255))
         return col_converted
-    
+
     for i in adj:
         G.add_node(i)
-    
+
     if weighted:
         for i in adj:
             for j in adj[i]:
@@ -83,9 +109,9 @@ def drawColoring(adj, isDir, weighted, colors):
         for i in adj:
             for j in adj[i]:
                 G.add_edge(i, j)
-    
+
     pos = nx.kamada_kawai_layout(G)
-    
+
     nx.draw(G, pos=pos, with_labels=True, node_color=converter(colors), font_color='white', font_weight='bold', alpha=0.9)
     nx.draw_networkx_edge_labels(G, pos=pos, font_color='black', font_weight=700,
                                 edge_labels=nx.get_edge_attributes(G, 'weight'))

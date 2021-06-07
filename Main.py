@@ -1,4 +1,13 @@
 
+"""
+Описание:
+		Главный модуль программы
+Функции:
+		main()		точка входа программы
+"""
+
+
+
 from sys import argv, exit
 
 from PyQt5.QtWidgets import QApplication
@@ -6,7 +15,6 @@ from PyQt5.QtWidgets import QApplication
 from Modules.View import GraphUI
 from Modules.Model import GraphModel
 from Modules.Control import GraphCtrl
-
 
 
 def main():
