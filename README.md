@@ -8,10 +8,10 @@
 
 
 To install required modules write  
->`pip install -r requirements.txt`
+>pip install -r requirements.txt
 
 To launch programm run
->`start.bat`
+>start.bat
 
 ## Suppoprted file types
 
