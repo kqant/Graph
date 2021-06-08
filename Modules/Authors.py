@@ -18,6 +18,5 @@ authors = \
 Рогов Дмитрий (kqant) - Back-end разработчик
 Баландин Захар (smaylninja) - Front-end разработчик
 Синельникова Илона (mouseLOL101) - Front-end разработчик
-Стахеев Дмитрий (Smirov) - Front-end разработчик
 """
 
