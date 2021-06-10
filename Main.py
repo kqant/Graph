@@ -1,10 +1,5 @@
 
-"""
-Описание:
-		Главный модуль программы
-Функции:
-		main()		точка входа программы
-"""
+"""Главный модуль программы."""
 
 
 
@@ -18,12 +13,11 @@ from Modules.Control import GraphCtrl
 
 
 def main():
+	"""Точка входа программы."""
 	app = QApplication(argv)
 
 	view = GraphUI()
-
 	model = GraphModel()
-
 	GraphCtrl(view, model)
 
 	view.show()

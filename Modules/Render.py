@@ -1,28 +1,5 @@
 
-"""
-Описание:
-        Модуль отрисовки графа с помощью библиотеки networkx
-Функции:
-        drawDefault                 отрисовка графа по умолчанию
-            Параметры:
-                [in] adj: dict      список смежности
-                [in] isDir: bool    ориентированность
-                [in] weighted: bool взвешенность
-
-        drawMinPath                 отрисовка минимального пути
-            Параметры:
-                [in] adj: dict      список смежности
-                [in] isDir: bool    ориентированность
-                [in] weighted: bool взвешенность
-                [in] path: list     минимальный путь
-
-        drawColoring                отрисовка цветов вершин
-            Параметры:
-                [in] adj: dict      список смежности
-                [in] isDir: bool    ориентированность
-                [in] weighted: bool взвешенность
-                [in] colors: list   список цветов
-"""
+"""Модуль отрисовки графа с помощью библиотеки networkx."""
 
 
 
@@ -30,6 +7,12 @@ import networkx as nx
 
 
 def drawDefault(adj, isDir, weighted):
+    """ Отрисовка графа по умолчанию.
+        Args:
+            adj (dict): Список смежности.
+            isDir (bool): Ориентированность.
+            weighted (bool): Взвешенность.
+    """    
     if isDir:
         G = nx.DiGraph()
     else:
@@ -56,6 +39,14 @@ def drawDefault(adj, isDir, weighted):
 
 
 def drawMinPath(adj, isDir, weighted, path):
+    """ Отрисовка минимального пути.
+
+        Args:
+            adj (dict): Список смежности.
+            isDir (bool): Ориентированность.
+            weighted (bool): Взвешенность.
+            path (list): Минимальный путь.
+    """    
     if isDir:
         G = nx.DiGraph()
     else:
@@ -86,7 +77,17 @@ def drawMinPath(adj, isDir, weighted, path):
     nx.draw_networkx_edges(G, pos=pos, width=1.0, edge_color=nx.get_edge_attributes(G,'color').values())
 
 
+
+
 def drawColoring(adj, isDir, weighted, colors):
+    """ Отрисовка цветов вершин.
+
+        Args:
+            adj (dict): Список смежности.
+            isDir (bool): Ориентированность.
+            weighted (bool): Взвешенность.
+            colors (list): Список цветов.
+    """    
     if isDir:
         G = nx.DiGraph()
     else:

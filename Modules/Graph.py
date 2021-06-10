@@ -1,70 +1,5 @@
 
-"""
-Описание:
-        Модуль для работы с графами
-Классы:
-        Graph                               класс графов
-            Поля:
-                adj: dict                   список смежности
-                directed: bool              ориентированность графа
-                weighted: bool              взвешенность графа
-                filePath: str               абсолютный путь до файла с данными графа
-                fileTypes: dict             словарь типов файлов структуры:
-                                            fileExt: (fileExt, weighted, directed) где
-                                            fileExt - тип файла 'str';
-                                            weighted - взвешенность 'bool';
-                                            directed - ориентированность 'bool';
-
-            Методы:
-                __init__                    инициализация класса
-
-                _addVertices                добавление вершин в adj
-                    Параметры:
-                        [in] *verts: dict   вершины
-
-                _addEdges                   добавление рёбер в adj
-                    Параметры:
-                        [in] start: dict    начальная вершина
-                        [in] end: dict      конечная вершина
-
-                _matrixToList               преобразование матрицы в список смежности
-                    Параметры:
-                        [in] matrix: dict   матрица смежности
-                    Возвращаемое значение:
-                        [out] G: dict       список смежности
-
-                _readList                   чтение списка смежности из filePath и заполнение adj
-
-                _readMatrix                 чтение матрицы смежности из filePath и заполнение adj
-
-                clearGraph                  очистка полей класса: adj, directed, weighted, filePath
-
-                getFields                   получение полей класса: adj, directed, weighted
-                    Возвращаемое значение:
-                        [out] adj
-                        [out] directed
-                        [out] weighted
-
-                initGraphFile               инициализация файлового пути поля filePath
-                    Параметры:
-                        [in] filepath
-
-                readGraph                   чтение и инициализация графа
-
-                minPathFind                 поиск кратчайшего пути в графе
-                    Параметры:
-                        [in] start: int     начальная вершина
-                        [in] goal: int      вершина назначения
-                    Возвращаемое значение:
-                        [out] visited: int  была ли посещена вершина goal
-                        [out] path: list    путь до вершины goal
-
-                coloring                    раскраска графа
-                    Возвращаемое значение:
-                        [out] cl: int       кол-во цветов
-                        [out] res: dict     список цветов
-"""
-
+"""Модуль для работы с графами"""
 
 
 from random import randint
@@ -73,13 +8,26 @@ from os.path import splitext
 
 
 class Graph:
-    adj: dict
+    """ Основной класс графа, содержит все данные для работы с графом.
+
+        Args:
+            adj (dict): список смежности.
+            directed (bool): ориентированность графа.
+            weighted (bool): взвешенность графа.
+            filePath (str): абсолютный путь до файла с данными графа.
+            fileTypes (dict):
+                fileExt (str): Тип файла.
+                weighted (bool): Взвешенность.
+                directed (bool): Ориентрованность.
+    """
+    adj: dict 
     directed: bool
     weighted: bool
     filePath: str
-    fileTypes: dict
-
+    fileTypes: dict(str, tuple(str, bool, bool))
+    
     def __init__(self):
+        """Инициализация класса."""
         self.adj = {}
         self.directed = False
         self.weighted = False
@@ -99,12 +47,23 @@ class Graph:
 
 
     def _addVertices(self, *verts):
+        """ Добавление вершин в adj.
+
+            Args:
+                verts (tuple(int)): Вершины, которые нужно создать.
+        """                
         for v in verts:
             if v not in self.adj.keys():
                 self.adj[v] = {}
 
 
     def _addEdges(self, start, ends):
+        """ Добавление рёбер в adj.
+
+            Args:
+                start (int): Начальная вершина.
+                ends (dict): Конечнае вершина.
+        """
         self._addVertices(*range(1, max(start, *ends)+1))
         self.adj[start] = {**self.adj[start], **ends}
         if not self.directed:
@@ -116,6 +75,14 @@ class Graph:
 
 
     def _matrixToList(self, matrix):
+        """ Преобразование матрицы в список смежности.
+
+            Args:
+                matrix (dict): Матрица смежности.
+
+            Returns:
+                dict: Список смежности.
+        """
         G = {}
         for a in range(len(matrix)):
             if matrix[a].count(0) != len(matrix):
@@ -131,6 +98,13 @@ class Graph:
 
 
     def _readList(self):
+        """ Чтение списка смежности из filePath и заполнение adj.
+
+            Raises:
+                Exception: "Uncorrect vertice".
+                Exception: "Uncorrect weights".
+                Exception: "Uncorrect vertice".
+        """
         with open(self.filePath, "r") as fin:
             while True:
                 temp = [int(i) for i in fin.readline().split()]
@@ -148,14 +122,14 @@ class Graph:
                 else:
                     for i in range(0, len(temp), 2):
                         if temp[i] <= 0 or temp[i+1] <= 0:
-                            print("Uncorrect vertice")
                             self._adj = {}
-                            return "Uncorrect vertice"
+                            raise Exception("Uncorrect vertice")
                         self._addEdges(temp[i], {temp[i+1]:1})
             self._addVertices(max(self.adj.keys()))
 
 
     def _readMatrix(self):
+        """Чтение матрицы смежности из filePath и заполнение adj."""        
         with open(self.filePath, "r") as fin:
             matrix = []
             while True:
@@ -170,6 +144,7 @@ class Graph:
 
 
     def clearGraph(self):
+        """Очистка полей класса: adj, directed, weighted, filePath."""        
         self.adj = {}
         self.directed = False
         self.weighted = False
@@ -177,14 +152,35 @@ class Graph:
 
 
     def getFields(self):
+        """ Получение полей класса: adj, directed, weighted.
+
+            Returns:
+                tuple:
+                    dict: Список смежности.
+                    bool: Направленность.
+                    bool: Взвешенность.
+        """        
         return self.adj, self.directed, self.weighted
 
 
     def initGraphFile(self, filepath):
+        """ Инициализация файлового пути поля filePath.
+
+            Args:
+                filepath (str): Путь к файлу.
+        """        
         self.filePath = filepath
 
 
     def readGraph(self):
+        """ Чтение и инициализация графа.
+
+            Raises:
+                Exception: "Incorrect file type <ВИД ФАЙЛА>".
+                Exception: "Path Error".
+                Exception: "File not match input type".
+                Exception: "Uncorrect vertice".
+        """
         self.adj = {}
         try:
             file_ext = splitext(self.filePath)[1]
@@ -205,9 +201,29 @@ class Graph:
             raise Exception("Path Error")
         except (IndexError, ValueError):
             raise Exception("File not match input type")
+        except Exception("Uncorrect vertice"):
+            raise Exception("Uncorrect vertice")
 
 
     def minPathFind(self, start, goal):
+        """ Поиск кратчайшего пути в графе.
+
+            Args:
+                start (int): Начальная вершина.
+                goal (int):  Вершина назначения.
+
+            Raises:
+                Exception: "Graph is empty".
+                Exception: "Graph not weighted".
+                Exception: "Unknown vertices".
+                Exception: "Vertices not in graph".
+                Exception: "Path not found".
+
+            Returns:
+                tuple:
+                int: Была ли посещена вершина goal.
+                list: Путь до вершины goal.
+        """        
         if not self.adj:
             raise Exception("Graph is empty")
         if not self.weighted:
@@ -248,6 +264,16 @@ class Graph:
 
 
     def coloring(self):
+        """ Раскраска графа.
+
+            Raises:
+                Exception: "Graph is empty".
+
+            Returns:
+                tuple:
+                    int: Кол-во цветов.
+                    dict: Список цветов.
+        """
         if not self.adj:
             raise Exception("Graph is empty")
         graph = self.adj
@@ -289,4 +315,3 @@ class Graph:
                 existColors[colored[i]] = (randint(0, 255), randint(0, 255),randint(0, 255))
                 res[i] = existColors[colored[i]]
         return cl, res
-

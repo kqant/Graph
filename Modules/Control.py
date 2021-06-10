@@ -1,33 +1,6 @@
 
-"""
-Описание:
-        Модуль контроллера (Controller) интерпретирует действия пользователя
-        из представления (View), оповещая модель (Model) о необходимости изменений
-Классы:
-        GraphCtrl                   класс контроллера (Controller)
-            Поля:
-                view: GraphUI       экземпляр класса 'GraphUI' (View)
-                model: GraphModel   экземпляр класса 'GraphModel' (Model)
-
-            Методы:
-                __init__            инициализация класса
-                    Параметры:
-                        [in] view
-                        [in] model
-
-                _connectButtons     подключение кнопок графического интерфейса
-
-                _chooseInputFile    выбор входного файла из view и передача пути в model
-
-                _updateGraph        инициализация графа из файла (model) и отображение в UI (view)
-
-                _clearGraph         очистка графа во view и model
-
-                _coloringGraph      нахождение цветов графа (model) и их графическое представление (view)
-
-                _minPathGraph       нахождение кратчайшего пути графа (model) и его графическое представление (view)
-
-                _aboutAuthors       вызов окошка с информацией об авторах (view)
+""" Модуль контроллера (Controller) интерпретирует действия пользователя
+    из представления (View), оповещая модель (Model) о необходимости изменений.
 """
 
 
@@ -36,13 +9,21 @@ from functools import partial
 
 
 class GraphCtrl:
-    def __init__(self, view, model):
+    """Класс контроллера (Controller)."""
+    def __init__(self, view, model):       
+        """ Инициализация класса.
+
+            Args:
+                view (GraphUI): экземпляр класса 'GraphUI' (View).
+                model (GraphModel): экземпляр класса 'GraphModel' (Model).
+        """
         self.view = view
         self.model = model
         self._connectButtons()
 
 
     def _connectButtons(self):
+        """Подключение кнопок графического интерфейса."""
         self.view.buttons["Input File"].clicked.connect(partial(self._chooseInputFile))
         self.view.buttons["⭯"].clicked.connect(partial(self._updateGraph))
         self.view.buttons["Clear"].clicked.connect(partial(self._clearGraph))
@@ -52,6 +33,7 @@ class GraphCtrl:
 
 
     def _chooseInputFile(self):
+        """Выбор входного файла из view и передача пути в model."""
         filepath = self.view.getPathFile()
         if filepath:
             self.model.graph.initGraphFile(filepath)
@@ -61,6 +43,7 @@ class GraphCtrl:
 
 
     def _updateGraph(self):
+        """Инициализация графа из файла (model) и отображение в UI (view)."""
         try:
             self.model.graph.readGraph()
         except Exception as ex:
@@ -75,6 +58,7 @@ class GraphCtrl:
 
 
     def _clearGraph(self):
+        """Очистка графа во view и model."""
         self.model.graph.clearGraph()
         self.view.figure.clf()
         self.view.canvas.draw()
@@ -83,6 +67,7 @@ class GraphCtrl:
 
 
     def _coloringGraph(self):
+        """Нахождение цветов графа (model) и их графическое представление (view)."""
         try:
             q, colors = self.model.graph.coloring()
         except Exception as ex:
@@ -99,6 +84,11 @@ class GraphCtrl:
 
 
     def _minPathGraph(self):
+        """ Нахождение кратчайшего пути графа и его графическое представление (view).
+
+            Raises:
+                Exception: Вызывает "Fields error" и сообщает пользователю об ошибке.
+        """
         start, goal = self.view.TextMinPathStart.text(), self.view.TextMinPathGoal.text()
 
         try:
@@ -119,5 +109,6 @@ class GraphCtrl:
 
 
     def _aboutAuthors(self):
+        """Вызов окошка с информацией об авторах."""
         self.view.aboutAuthors()
 
