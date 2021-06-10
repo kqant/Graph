@@ -2,6 +2,7 @@
 """Модуль для работы с графами"""
 
 
+
 from random import randint
 from collections import deque
 from os.path import splitext
@@ -25,7 +26,7 @@ class Graph:
     weighted: bool
     filePath: str
     fileTypes: dict(str, tuple(str, bool, bool))
-    
+
     def __init__(self):
         """Инициализация класса."""
         self.adj = {}
@@ -315,3 +316,4 @@ class Graph:
                 existColors[colored[i]] = (randint(0, 255), randint(0, 255),randint(0, 255))
                 res[i] = existColors[colored[i]]
         return cl, res
+

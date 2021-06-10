@@ -12,7 +12,7 @@ def drawDefault(adj, isDir, weighted):
             adj (dict): Список смежности.
             isDir (bool): Ориентированность.
             weighted (bool): Взвешенность.
-    """    
+    """
     if isDir:
         G = nx.DiGraph()
     else:
@@ -46,7 +46,7 @@ def drawMinPath(adj, isDir, weighted, path):
             isDir (bool): Ориентированность.
             weighted (bool): Взвешенность.
             path (list): Минимальный путь.
-    """    
+    """
     if isDir:
         G = nx.DiGraph()
     else:
@@ -77,8 +77,6 @@ def drawMinPath(adj, isDir, weighted, path):
     nx.draw_networkx_edges(G, pos=pos, width=1.0, edge_color=nx.get_edge_attributes(G,'color').values())
 
 
-
-
 def drawColoring(adj, isDir, weighted, colors):
     """ Отрисовка цветов вершин.
 
@@ -87,7 +85,7 @@ def drawColoring(adj, isDir, weighted, colors):
             isDir (bool): Ориентированность.
             weighted (bool): Взвешенность.
             colors (list): Список цветов.
-    """    
+    """
     if isDir:
         G = nx.DiGraph()
     else:
