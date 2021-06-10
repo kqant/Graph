@@ -1,7 +1,8 @@
 
-""" Модуль представления (View) отвечает за отображение данных
-    модели (Model) пользователя, реагируя на изменение модели (Model)
-    с помощью фреймворка PytQt5.
+"""
+Модуль представления (View) отвечает за отображение данных
+модели (Model) пользователя, реагируя на изменение модели (Model)
+с помощью фреймворка PytQt5.
 """
 
 
@@ -22,25 +23,25 @@ iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
 
 
 class GraphUI(QMainWindow):
-    """Класс представления (View) унаследованный от QMainWindow."""
-    def __init__(self, parent = None):
-        """ Инициализация класса.
+    """
+    Класс представления (View) унаследованный от QMainWindow.
 
-            Attributes:
-                centralwidget (QWidget): Вентральный виджет.
-                horizontalLayoutWidget (QWidget): Виджет горизонтального слоя.
-                buttonsLayout (QHBoxLayout): Воризонтальный слой кнопок.
-                graphwidget (QWidget): Виджет графа.
-                generalLayout (QVBoxLayout): Главный вертикальный виджет.
-                buttons (dict): Список кнопок.
-                aboutButton (QPushButton): Виджет кнопки "About".
-                figure (plt): Фигура matplotlib.
-                canvas (FigureCanvas): Виджет холста.
-                toolbar (NavigationToolbar): Виджет тулбара.
-                TextMinPathStart (QLineEdit): Виджет поля "Start".
-                TextMinPathGoal (QLineEdit): Виджет поля "Goal".
-                AlgoOutput (QLineEdit): Виджет поля результата алгоритма.
-        """
+    Attributes:
+        centralwidget (QWidget): Вентральный виджет.
+        horizontalLayoutWidget (QWidget): Виджет горизонтального слоя.
+        buttonsLayout (QHBoxLayout): Воризонтальный слой кнопок.
+        graphwidget (QWidget): Виджет графа.
+        generalLayout (QVBoxLayout): Главный вертикальный виджет.
+        buttons (dict): Список кнопок.
+        aboutButton (QPushButton): Виджет кнопки "About".
+        figure (plt): Фигура matplotlib.
+        canvas (FigureCanvas): Виджет холста.
+        toolbar (NavigationToolbar): Виджет тулбара.
+        TextMinPathStart (QLineEdit): Виджет поля "Start".
+        TextMinPathGoal (QLineEdit): Виджет поля "Goal".
+        AlgoOutput (QLineEdit): Виджет поля результата алгоритма.
+    """
+    def __init__(self, parent = None):
         super(GraphUI, self).__init__(parent)
         self.setWindowTitle("GraphDrawer")
         self.setFixedSize(900, 615)
@@ -162,10 +163,11 @@ class GraphUI(QMainWindow):
 
 
     def getPathFile(self):
-        """ Получение пути из диалогового окна выбора файла.
+        """
+        Получение пути из диалогового окна выбора файла.
 
-            Returns:
-                string: Абсолютный путь до файла.
+        Returns:
+            string: Абсолютный путь до файла.
         """
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
@@ -176,10 +178,11 @@ class GraphUI(QMainWindow):
 
 
     def showError(self, error):
-        """ Вывод сообщения об ошибке.
+        """
+        Вывод сообщения об ошибке.
 
-            Args:
-                error (string): Cтрока с ошибкой.
+        Args:
+            error (string): Cтрока с ошибкой.
         """
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)

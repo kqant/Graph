@@ -7,11 +7,12 @@ import networkx as nx
 
 
 def drawDefault(adj, isDir, weighted):
-    """ Отрисовка графа по умолчанию.
-        Args:
-            adj (dict): Список смежности.
-            isDir (bool): Ориентированность.
-            weighted (bool): Взвешенность.
+    """
+    Отрисовка графа по умолчанию.
+    Args:
+        adj (dict): Список смежности.
+        isDir (bool): Ориентированность.
+        weighted (bool): Взвешенность.
     """
     if isDir:
         G = nx.DiGraph()
@@ -39,13 +40,14 @@ def drawDefault(adj, isDir, weighted):
 
 
 def drawMinPath(adj, isDir, weighted, path):
-    """ Отрисовка минимального пути.
+    """
+    Отрисовка минимального пути.
 
-        Args:
-            adj (dict): Список смежности.
-            isDir (bool): Ориентированность.
-            weighted (bool): Взвешенность.
-            path (list): Минимальный путь.
+    Args:
+        adj (dict): Список смежности.
+        isDir (bool): Ориентированность.
+        weighted (bool): Взвешенность.
+        path (list): Минимальный путь.
     """
     if isDir:
         G = nx.DiGraph()
@@ -78,13 +80,14 @@ def drawMinPath(adj, isDir, weighted, path):
 
 
 def drawColoring(adj, isDir, weighted, colors):
-    """ Отрисовка цветов вершин.
+    """
+    Отрисовка цветов вершин.
 
-        Args:
-            adj (dict): Список смежности.
-            isDir (bool): Ориентированность.
-            weighted (bool): Взвешенность.
-            colors (list): Список цветов.
+    Args:
+        adj (dict): Список смежности.
+        isDir (bool): Ориентированность.
+        weighted (bool): Взвешенность.
+        colors (list): Список цветов.
     """
     if isDir:
         G = nx.DiGraph()

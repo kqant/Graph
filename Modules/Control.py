@@ -1,6 +1,7 @@
 
-""" Модуль контроллера (Controller) интерпретирует действия пользователя
-    из представления (View), оповещая модель (Model) о необходимости изменений.
+"""
+Модуль контроллера (Controller) интерпретирует действия пользователя
+из представления (View), оповещая модель (Model) о необходимости изменений.
 """
 
 
@@ -9,16 +10,20 @@ from functools import partial
 
 
 class GraphCtrl:
-    """Класс контроллера (Controller)."""
-    def __init__(self, view, model):       
-        """ Инициализация класса.
+    """
+    Класс контроллера (Controller).
 
-            Args:
-                view (GraphUI): экземпляр класса 'GraphUI' (View).
-                model (GraphModel): экземпляр класса 'GraphModel' (Model).
-        """
-        self.view = view
-        self.model = model
+    Args:
+        _view (GraphUI): экземпляр класса 'GraphUI' (View).
+        _model (GraphModel): экземпляр класса 'GraphModel' (Model).
+
+    Attributes:
+        view (GraphUI): экземпляр класса 'GraphUI' (View).
+        model (GraphModel): экземпляр класса 'GraphModel' (Model).
+    """
+    def __init__(self, _view, _model):       
+        self.view = _view
+        self.model = _model
         self._connectButtons()
 
 
@@ -84,10 +89,11 @@ class GraphCtrl:
 
 
     def _minPathGraph(self):
-        """ Нахождение кратчайшего пути графа и его графическое представление (view).
+        """
+        Нахождение кратчайшего пути графа и его графическое представление (view).
 
-            Raises:
-                Exception: Вызывает "Fields error" и сообщает пользователю об ошибке.
+        Raises:
+            Exception: "Fields error"
         """
         start, goal = self.view.TextMinPathStart.text(), self.view.TextMinPathGoal.text()
 

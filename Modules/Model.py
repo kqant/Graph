@@ -1,6 +1,7 @@
 
-""" Модуль модели (Model) предоставляет данные и реагирует
-    на команды контроллера (Controller), изменяя своё состояние.
+"""
+Модуль модели (Model) предоставляет данные и реагирует
+на команды контроллера (Controller), изменяя своё состояние.
 """
 
 
@@ -10,14 +11,14 @@ from .Render import *
 
 
 class GraphModel():
-    """Класс модели (Model)."""
-    def __init__(self):
-        """ Инициализация класса.
+    """
+    Класс модели (Model).
 
-            Attributes:
-                graph (Graph): Экземпляр класса Graph.
-                functions (dict): Словарь функций.
-        """
+    Attributes:
+        graph (Graph): Экземпляр класса Graph.
+        functions (dict): Словарь функций.
+    """
+    def __init__(self):
         self.graph = Graph()
         self.functions = {
             drawDefault.__name__: drawDefault,
