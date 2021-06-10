@@ -9,6 +9,7 @@ import networkx as nx
 def drawDefault(adj, isDir, weighted):
     """
     Отрисовка графа по умолчанию.
+
     Args:
         adj (dict): Список смежности.
         isDir (bool): Ориентированность.
