@@ -1,6 +1,5 @@
 
-"""
-Модуль представления (View) отвечает за отображение данных
+"""Модуль представления (View) отвечает за отображение данных
 модели (Model) пользователя, реагируя на изменение модели (Model)
 с помощью фреймворка PyQt5.
 """
@@ -23,8 +22,7 @@ iconPath = path.join(getcwd(), "Icons/GraphDrawer.svg")
 
 
 class GraphUI(QMainWindow):
-    """
-    Класс представления (View) унаследованный от QMainWindow.
+    """Класс представления (View) унаследованный от QMainWindow.
 
     Attributes:
         centralwidget (QWidget): Вентральный виджет.
@@ -163,8 +161,7 @@ class GraphUI(QMainWindow):
 
 
     def getPathFile(self):
-        """
-        Получение пути из диалогового окна выбора файла.
+        """Получение пути из диалогового окна выбора файла.
 
         Returns:
             string: Абсолютный путь до файла.
@@ -178,8 +175,7 @@ class GraphUI(QMainWindow):
 
 
     def showError(self, error):
-        """
-        Вывод сообщения об ошибке.
+        """Вывод сообщения об ошибке.
 
         Args:
             error (string): Cтрока с ошибкой.

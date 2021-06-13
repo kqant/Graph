@@ -7,8 +7,7 @@ import networkx as nx
 
 
 def drawDefault(adj, isDir, weighted):
-    """
-    Отрисовка графа по умолчанию.
+    """Отрисовка графа по умолчанию.
 
     Args:
         adj (dict): Список смежности.
@@ -41,8 +40,7 @@ def drawDefault(adj, isDir, weighted):
 
 
 def drawMinPath(adj, isDir, weighted, path):
-    """
-    Отрисовка минимального пути.
+    """Отрисовка минимального пути.
 
     Args:
         adj (dict): Список смежности.
@@ -81,8 +79,7 @@ def drawMinPath(adj, isDir, weighted, path):
 
 
 def drawColoring(adj, isDir, weighted, colors):
-    """
-    Отрисовка цветов вершин.
+    """Отрисовка цветов вершин.
 
     Args:
         adj (dict): Список смежности.
